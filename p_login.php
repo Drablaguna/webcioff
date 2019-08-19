@@ -11,11 +11,22 @@
 	$numSocio = $_POST["numSocio"];
 	$password = $_POST["password"];
 	
+	/* ======================================================
+	      G E N E R A C I O N  D E  P A S S W O R D S
+	====================================================== */
+
+	// $pass = "stringConLaPassQueGenerare";
+	// $passHasheada = password_hash($pass, PASSWORD_DEFAULT);
+	// echo $passHasheada; // esta se almacena en la BD
+
+	// para dar de alta usuarios
+	// INSERT INTO usuario (numSocio, contrasena, estatus, actualizado, faseRegistro, registrado, pagado) VALUES (NUMEROSOCIO, PASSHASHEADA, ESTATUSCIOFF, 0,0,0,0);
+
 	include("Connection.php");
 	$conexion = Connect();
 	
 	// primero verificamos si el usuario existe
-	$SQL = "SELECT * FROM usuario WHERE numSocio = '$numSocio';";
+	$SQL = "SELECT idUsuario, numSocio, contrasena FROM usuario WHERE numSocio = '$numSocio';";
 	$consulta = RunQuery($conexion, $SQL);
 	// $n tiene la cantidad de elementos obtenidos en $consulta 0 - no existe 1 - si existe
 	$n = mysqli_num_rows($consulta);
@@ -42,6 +53,8 @@
 				$_SESSION["numSocio"]  = $numSocio;
                 $_SESSION["idUsuario"] = $fila["idUsuario"];
 				$_SESSION["sesion"]    = true;
+				// arreglo que almacena la actualizacion de info para ponerla en el registro al congreso
+				// $_SESSION["arrActDatos"]; para acceder $_SESSION["arrActDatos"][0]["nombreField"]=="loQueSea";
 
 				// obtencion de la fecha y hora actual para almacenarla en la BD
 				$now = date("Y-m-d H:i:s");

@@ -56,6 +56,14 @@ p:hover {
    ************************************************
 */
 
+.version-text {
+    color: #FDFCFC;
+    position: fixed;
+    top: 95%;
+    left: 95%;
+    font-size: 14px;
+}
+
 .bg-image {
     background-image: url("../img/IMG_4274_2.jpg");
     height: 100vh;
@@ -550,6 +558,7 @@ p:hover {
 
 .modal-mid-cuenta-text {
     text-align: center;
+    word-wrap: break-word;
 }
 
 /* 

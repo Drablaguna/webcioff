@@ -121,7 +121,7 @@
             
                                     <h4 class="modal-mid-cuenta-title">'.$estado.' - '.$ciudad.'</h4>
 
-                                    <h4 class="modal-mid-cuenta-title">'.$nombreDir.' | '.$cargoGpo.'</h4>                            
+                                    <h4 class="modal-mid-cuenta-title">'.$nombreDir.' | '.$cargoGpo.'</h4>
 
                                     <h4 class="modal-mid-cuenta-title">- '.$estatusMiembro.' -</h4>
                                     
@@ -130,10 +130,12 @@
                                     <img class="img-sec" src="'.$img3.'" alt="'.$nombreGpo.'">
             
                                     <div class="modal-mid-cuenta-text-container">
+                                        <h4 class="modal-mid-cuenta-title">Reseña</h4>
                                         <p class="modal-mid-cuenta-text">'.$resena.'</p>
                                     </div>
             
                                     <div class="modal-mid-cuenta-text-container">
+                                        <h4 class="modal-mid-cuenta-title">Contacto</h4>
                                         <p class="modal-mid-cuenta-text">'.$contacto.'</p>
                                     </div>
                                 </div>

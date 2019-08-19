@@ -18,26 +18,39 @@
 	    $ruta_imagen = "./fotosGrupos/";
 
 	    $img1     = $ruta_imagen.$_FILES["img1"]["name"];
-	    $ext      = explode(".", $_FILES["img1"]["name"]);
-	    $new_img1 = $ruta_imagen.$idUsuario."_1.".$ext[1];
+	    $ext 	  = pathinfo($img1, PATHINFO_EXTENSION);
+	    $new_img1 = $ruta_imagen.$idUsuario."_1.".$ext;
 
 	    $img2     = $ruta_imagen.$_FILES["img2"]["name"];
-	    $ext      = explode(".", $_FILES["img2"]["name"]);
-	    $new_img2 = $ruta_imagen.$idUsuario."_2.".$ext[1];
+	    $ext 	  = pathinfo($img2, PATHINFO_EXTENSION);
+	    $new_img2 = $ruta_imagen.$idUsuario."_2.".$ext;
 
 	    $img3     = $ruta_imagen.$_FILES["img3"]["name"];
-	    $ext      = explode(".", $_FILES["img3"]["name"]);
-	    $new_img3 = $ruta_imagen.$idUsuario."_3.".$ext[1];
+	    $ext 	  = pathinfo($img3, PATHINFO_EXTENSION);
+	    $new_img3 = $ruta_imagen.$idUsuario."_3.".$ext;
 
 		include("Connection.php");
 		$conexion = Connect();
 		
+		// con "SET NAMES 'utf8'" evito caracteres extranos en peticiones a MySQL
+    	mysqli_query($conexion, "SET NAMES 'utf8'");
+    	// mysqli_set_charset($conn, "utf8"); // si no funciona el de arriba
+
 		$SQL = "SELECT * FROM grupo WHERE idUsuario = '$idUsuario';";
 		$consulta = RunQuery($conexion, $SQL);
 		$n = mysqli_num_rows($consulta);
 		
 		if($n != 0) {
 			// update
+
+			// igualo arr almacenado en SESSION a los datos a actualizar para actualizar el registro al congreso
+			$_SESSION["arrActDatos"] = array(
+				"nombreDir"=>$nombreDir,
+				"estado"=>$estado,
+				"ciudad"=>$ciudad,
+				"nombreGpo"=>$nombreGpo,
+				"cargoGpo"=>$cargoGpo
+			);
 
 			$SQL = "UPDATE grupo SET nombreGpo='$nombreGpo', estado='$estado', ciudad='$ciudad',
 			 nombreDir='$nombreDir', cargoGpo='$cargoGpo', resena='$resena', contacto='$contacto',

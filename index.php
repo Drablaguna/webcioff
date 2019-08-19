@@ -6,8 +6,6 @@
             header("Location:miCuenta.php");
         }        
     }
-
-    
 ?>
 
 <!DOCTYPE html>
@@ -46,6 +44,10 @@
                 </div>
             </form>
         </div>
+    </div>
+
+    <div class="version-text">
+        <h4>Ver 0.82</h4>
     </div>
 
 </body>
