@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="static/css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-    <title>Inicio de Sesión</title>
+    <title>CIOFF México</title>
 </head>
 <style>
     html { background-color: black; }
@@ -47,7 +47,7 @@
     </div>
 
     <div class="version-text">
-        <h4>Ver 0.82</h4>
+        <h4>Ver 0.84</h4>
     </div>
 
 </body>

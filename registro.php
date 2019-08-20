@@ -26,8 +26,6 @@
     $actualizado    = $arr_user["actualizado"];
     $faseRegistro   = $arr_user["faseRegistro"];
 
-    // Disconnect($con);
-
 ?>
 
 <!DOCTYPE html>
@@ -110,8 +108,8 @@
                                     <form class="modal-datos-mid" name="formActInf" method="POST" action="p_registro1.php" enctype="multipart/form-data">
                                         <h4>Nota: Tus datos como tu nombre, tu número de socio, estado y ciudad ya están alamacenados,
                                         por lo tanto no te los pediremos en el llenado de este formulario.<br><br>
-                                        Si estás registrado en la plataforma con dos agrupaciones o más, por favor, solo
-                                        contesta este formulario con una de ellas.</h4>
+                                        Si estás registrado en la plataforma con dos agrupaciones o más, por favor, contesta 
+                                        este formulario con solo una de ellas.</h4>
                                         <br>
                                         <p><span>*</span>Campos requeridos</p>
                                         <p><span>*</span>Correo</p>
@@ -130,16 +128,17 @@
                                         <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple - $3000.00 MXN
                                         <br><br>
                                         <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple - $4000.00 MXN
-                                        <p><span>*</span>Acompañantes (en caso de no tener, por favor, llena este campo con un guión "-")</p>
+                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con un espacio, en caso de no tener, 
+                                        llena este campo con un guión "-")</p>
                                         <textarea rows="4" cols="73" name="acompanantes" class="input-area input-area-short" minlength="1" maxlength="499" required></textarea>
-                                        <p>Fecha de llegada</p>
-                                        <input type="date" name="llegadaF" class="input-form">
-                                        <p>Hora de llegada</p>
-                                        <input type="time" name="llegadaH" class="input-form">
-                                        <p>Fecha de salida</p>
-                                        <input type="date" name="salidaF" class="input-form">
-                                        <p>Hora de salida</p>
-                                        <input type="time" name="salidaH" class="input-form">
+                                        <p><span>*</span>Fecha de llegada</p>
+                                        <input type="date" name="llegadaF" class="input-form" required>
+                                        <p><span>*</span>Hora de llegada</p>
+                                        <input type="time" name="llegadaH" class="input-form" required>
+                                        <p><span>*</span>Fecha de salida</p>
+                                        <input type="date" name="salidaF" class="input-form" required>
+                                        <p><span>*</span>Hora de salida</p>
+                                        <input type="time" name="salidaH" class="input-form" required>
                                         
                                         <div class="modal-datos-mid-bottom">
                                             <input class="btn-main" type="submit" name="submit" value="Registrarse">
@@ -149,6 +148,8 @@
                             </div>
                         </div>
                     ';
+                    Disconnect($con);
+
                 } elseif ($actualizado == 1 && $faseRegistro == 1) {
                     // el usuario ya actualizo y respondio el form de registro
                     $SQLreg        = "SELECT * FROM registrocongreso WHERE numSocio = $numSocio;";
@@ -170,9 +171,9 @@
                     $fechaHoraSalida  = $arr_assoc_reg["fechaHoraSalida"];
                     $monto            = $arr_assoc_reg["monto"];
 
-                    $newFecha = date("d-m-Y", strtotime($fechaNacimiento));;
-                    $newFechaHoraLlegada = $fechaHoraLlegada;
-                    $newFechaHoraSalida = $fechaHoraSalida;
+                    $newFecha = date("d-m-Y", strtotime($fechaNacimiento));
+                    $newFechaHoraLlegada = date("d-m-Y H:i", strtotime($fechaHoraLlegada));
+                    $newFechaHoraSalida = date("d-m-Y H:i", strtotime($fechaHoraSalida));
 
                     // convierto las fechas a un formato dia mes annio
                     // $newFechaNac = date("d-m-Y", strtotime($fechaNac));
@@ -196,7 +197,12 @@
                                     <h2>Registro al Congreso</h2>
                                 </div>
                                 <div class="modal-mid-container">
-                                    <form class="modal-datos-mid" name="formActInf" method="POST" action="XXXXXXXXXXXXXXXX.php" enctype="multipart/form-data">
+                                    <form class="modal-datos-mid" name="formActInf" method="POST" action="subirPDF.php" enctype="multipart/form-data">
+                                        <h4>Nota: Para corregir tus datos como el nombre de tu agrupación o tu cargo dentro de la misma es necesario
+                                        que des clic al apartado "Actualizar Información" y envíes el formulario (actualizar tus datos), después regresa a esta pantalla
+                                        y da clic en el botón "Corregir datos" en la parte superior del formulario, si solo te equivocaste en 
+                                        algún campo del formulario de registro al congreso solo da clic al botón "Corregir datos".</h4>
+                                        <br>
                                         <p>La información que ingresaste es la siguiente.</p>
                                         <p>Número de socio: '.$numSocio.'</p>
                                         <p>Nombre</p>
@@ -225,18 +231,90 @@
                                         <h4>'.$newFechaHoraSalida.'</h4>
                                         <p>Monto a pagar</p>
                                         <h4>'.$monto.'</h4>
+                                        
+                                        <p>Si tus datos son correctos da clic al botón de abajo para generar tu recibo de registro al congreso.</p>
+
+                                        <p><span>*</span>Sube aquí tu recibo ya pagado en PDF</p>
+                                        <input type="file" accept="application/pdf" name="pdf" id="pdf" class="input-form input-file" required>
+
                                         <div class="modal-datos-mid-bottom inline-buttons">
-                                            <input class="btn-main darkblue-btn" type="submit" name="submit" value="Corregir datos">
                                             <input class="btn-main" type="submit" name="submit" value="Subir recibo">
+                                        </div>
+                                    </form>
+                                    <form class="btn-form" method="POST" name="formCorregir" action="corregir.php">
+                                        <input style="display: none;" type="text" name="key" value="key">
+                                        <input class="btn-main darkblue-btn" type="submit" value="Corregir datos">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    ';
+                    Disconnect($con);
+                } elseif ($actualizado == 1 && $faseRegistro == 3) {
+                    // es faseRegistro 3 si el usuario quiere corregir sus datos
+                    $SQL             = "SELECT correo, fechaNacimiento, telefonoCelular, telefonoFijo, acompanantes 
+                        FROM registrocongreso WHERE numSocio = $numSocio;";
+                    $resSQLUP        = RunQuery($con, $SQL);
+                    $arr_ass_UP      = mysqli_fetch_assoc($resSQLUP);//Warning: mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in C:\xampp\htdocs\WebCIOFFRepo\webcioff\registro.php on line 258
+                    $correo          = $arr_ass_UP["correo"];
+                    $fechaNacimiento = $arr_ass_UP["fechaNacimiento"];
+                    $telefonoCelular = $arr_ass_UP["telefonoCelular"];
+                    $telefonoFijo    = $arr_ass_UP["telefonoFijo"];
+                    $acompanantes    = $arr_ass_UP["acompanantes"];
+
+                    // se imprimen los datos antes ingresados para hacer update
+                    echo '
+                        <div class="modal-container">
+                            <div class="modal-datos">
+                                <div class="modal-datos-top">
+                                    <h2>Registro al Congreso</h2>
+                                </div>
+                                <div class="modal-mid-container">
+                                    <form class="modal-datos-mid" name="formActInf" method="POST" action="p_registro_update.php" enctype="multipart/form-data">
+                                        <h4>Nota: Tus datos como tu nombre, tu número de socio, estado y ciudad ya están alamacenados,
+                                        por lo tanto no te los pediremos en el llenado de este formulario.<br><br>
+                                        Si estás registrado en la plataforma con dos agrupaciones o más, por favor, contesta 
+                                        este formulario con solo una de ellas.</h4>
+                                        <br>
+                                        <p><span>*</span>Campos requeridos</p>
+                                        <p><span>*</span>Correo</p>
+                                        <input type="email" name="correo" class="input-form" minlength="5" maxlength="99" value="'.$correo.'" required>
+                                        <p><span>*</span>Fecha de Nacimiento</p>
+                                        <input type="date" name="fechaNac" class="input-form" value="'.$fechaNacimiento.'" required>
+                                        <p><span>*</span>Teléfono Celular</p>
+                                        <input type="text" name="telefono" class="input-form" minlength="5" maxlength="49" value="'.$telefonoCelular.'" required>
+                                        <p>Teléfono Fijo</p>
+                                        <input type="text" name="telefonoFijo" class="input-form" minlength="5" maxlength="49" value="'.$telefonoFijo.'">
+                                        <p><span>*</span>Tipo de Habitación</p>
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Individual" required> Individual - $1000.00 MXN
+                                        <br><br>
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Doble" required>  Doble - $2000.00 MXN
+                                        <br><br>
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple - $3000.00 MXN
+                                        <br><br>
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple - $4000.00 MXN
+                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con un espacio, en caso de no tener, 
+                                        llena este campo con un guión "-")</p>
+                                        <textarea rows="4" cols="73" name="acompanantes" class="input-area input-area-short" minlength="1" maxlength="499" required>'.$acompanantes.'</textarea>
+                                        <p><span>*</span>Fecha de llegada</p>
+                                        <input type="date" name="llegadaF" class="input-form" required>
+                                        <p><span>*</span>Hora de llegada</p>
+                                        <input type="time" name="llegadaH" class="input-form" required>
+                                        <p><span>*</span>Fecha de salida</p>
+                                        <input type="date" name="salidaF" class="input-form" required>
+                                        <p><span>*</span>Hora de salida</p>
+                                        <input type="time" name="salidaH" class="input-form" required>
+                                        
+                                        <div class="modal-datos-mid-bottom">
+                                            <input class="btn-main" type="submit" name="submit" style="margin-left: -10px;" value="Actualizar registro">
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     ';
-                } /*elseif ($actualizado == 1 && $faseRegistro == 2) {
-                    // el usuario ya actualizo, respondio el form y su pago fue aceptado
-                }*/ else {
+                    Disconnect($con);
+                } else {
                     // el usuario no ha actualizado sus datos
                     echo '
                         <div id="modal-alerta-in" class="modal-alerta">

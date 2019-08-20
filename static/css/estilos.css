@@ -588,10 +588,16 @@ p:hover {
 */
 
 .inline-buttons {
-    margin: 40px 24%;
     display: flex;
 }
 
 .darkblue-btn {
     background-color: #395B70;
+    text-decoration: none;
+}
+
+.btn-form {
+    position: absolute;
+    top: 28px;
+    left: 20px;
 }

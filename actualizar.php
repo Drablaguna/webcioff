@@ -129,7 +129,7 @@
                                     <h4>Nota: Las fotos que subas aparecerán en la pantalla de inicio de sesión para
                                     todos los demás usuarios.<br>
                                     Si estás actualizando tus datos ten en cuenta que las fotos que hayas subido
-                                    en el pasado serán reemplazadas por las que subas.</h4>
+                                    en el pasado serán reemplazadas por las que mandes en este formulario.</h4>
                                     <br>
                                     <p><span>*</span>Campos requeridos</p>
                                     <p><span>*</span>Nombre de Grupo (o festival en caso de que la cuenta pertenezca a uno)</p>
@@ -144,8 +144,9 @@
                                     <input type="text" name="cargoGpo" class="input-form" minlength="5" maxlength="99" value="'.$cargoGpo.'" required>
                                     <p>Breve Reseña del Grupo o Festival</p>
                                     <textarea  rows="4" cols="73" name="resena" class="input-area" minlength="10" maxlength="999">'.$resena.'</textarea>
-                                    <p><span>*</span>Datos de Contacto y Redes Sociales (separar cada link con un espacio)</p>
+                                    <p><span>*</span>Datos de Contacto y Redes Sociales (separar cada dato o enlace con un espacio)</p>
                                     <textarea  rows="4" cols="73" name="contacto" class="input-area" minlength="10" maxlength="299" required>'.$contacto.'</textarea>
+                                    <p>Para mejores resultados asegúrate de subir fotos en tamaño rectangular (ancho mayor y alto menor).</p>
                                     <p><span>*</span>Foto 1</p>
                                     <input type="file" accept="image/*" name="img1" id="img1" class="input-form input-file" required>
                                     <p><span>*</span>Foto 2</p>

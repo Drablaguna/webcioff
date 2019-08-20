@@ -104,8 +104,8 @@
 						    window.location.href="registro.php";
 						    </script>';
 				} else {
-					// Disconnect($conexion);
-			  //   	header("Location:error.php");
+					Disconnect($conexion);
+			    	header("Location:error.php");
 			    }
 			} else {
 				// insert
@@ -115,7 +115,7 @@
 				   '$fechaNac', '$estado', '$ciudad', '$telefono', '$telefonoFijo', '$nombreGpo', '$cargoGpo',
 				    '$habitacion', '$acompanantes', '$newLlegada', '$newSalida', '$monto');";
 				$query = RunQuery($conexion, $SQL);
-				echo $SQL;
+				
 				if ($query) {
 					$sql_up_fase  = "UPDATE usuario SET faseRegistro = 1 WHERE idUsuario = $idUsuario;";
 					RunQuery($conexion, $sql_up_fase);
@@ -125,8 +125,8 @@
 						    window.location.href="registro.php";
 						    </script>';
 				} else {
-					// Disconnect($conexion);
-			  //   	header("Location:error.php");
+					Disconnect($conexion);
+			    	header("Location:error.php");
 			    }
 			}
 		}
