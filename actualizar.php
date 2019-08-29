@@ -54,6 +54,7 @@
     <link rel="stylesheet" href="static/css/estilos.css">
     <script type="text/javascript" src="static/js/funciones.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/ico" href="static/img/Logo_CIOFF_pequeno.png"/>
     <title>Actualizar Información</title>
 </head>
 <body>

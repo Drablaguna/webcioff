@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="static/css/estilos.css">
     <script type="text/javascript" src="static/js/funciones.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/ico" href="static/img/Logo_CIOFF_pequeno.png"/>
     <title>Registro al Congreso</title>
 </head>
 <body>
@@ -123,7 +124,7 @@
                                         <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple - $3000.00 MXN
                                         <br><br>
                                         <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple - $4000.00 MXN
-                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con un espacio, en caso de no tener, 
+                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con una coma, en caso de no tener, 
                                         llena este campo con un guión "-")</p>
                                         <textarea rows="4" cols="73" name="acompanantes" class="input-area input-area-short" minlength="1" maxlength="499" required></textarea>
                                         <p><span>*</span>Fecha de llegada</p>
@@ -282,7 +283,7 @@
                                         <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple - $3000.00 MXN
                                         <br><br>
                                         <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple - $4000.00 MXN
-                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con un espacio, en caso de no tener, 
+                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con una coma, en caso de no tener, 
                                         llena este campo con un guión "-")</p>
                                         <textarea rows="4" cols="73" name="acompanantes" class="input-area input-area-short" minlength="1" maxlength="499" required>'.$acompanantes.'</textarea>
                                         <br><br>

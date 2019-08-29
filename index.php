@@ -16,6 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="static/css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+     <link rel="icon" type="image/ico" href="static/img/Logo_CIOFF_pequeno.png"/>
     <title>CIOFF México</title>
 </head>
 <style>
@@ -47,7 +48,7 @@
     </div>
 
     <div class="version-text">
-        <h4>Ver 0.9</h4>
+        <h4>Ver 1.0</h4>
     </div>
 
 </body>

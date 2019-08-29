@@ -25,6 +25,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="static/css/estilos.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/ico" href="static/img/Logo_CIOFF_pequeno.png"/>
     <title>Error</title>
 </head>
 <body>
