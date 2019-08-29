@@ -1,11 +1,6 @@
 <?php
 	session_start();
-
-	if ($_SESSION['sesion']) {
-		
-	}else{
-	    header("Location:index.php");
-	}
+	if (!$_SESSION['sesion']) { header("Location:index.php"); }
 ?>
 
 <?php
@@ -66,10 +61,10 @@
                 <ul>
                     <li class="cont-option">
                         <img src="static/img/user.png" alt="Mi Cuenta">
-                        <a href="miCuenta.php">Mi Cuenta</a>
+                        <a id="blue_a" href="miCuenta.php">Mi Cuenta</a>
                     </li>
                     <li class="cont-option">
-                        <img src="static/img/user.png" alt="Actualizar Información">
+                        <img src="static/img/list.png" alt="Actualizar Información">
                         <a href="actualizar.php">Actualizar Información</a>
                     </li>
                     <li class="cont-option">

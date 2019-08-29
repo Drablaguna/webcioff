@@ -71,7 +71,7 @@
 				Disconnect($conexion);
 
 				echo'<script type="text/javascript">
-				    alert("Inicio de sesión correcto.");
+				    alert("Inicio de sesión satisfactorio.");
 				    window.location.href="miCuenta.php";
 				    </script>';
 			} else {

@@ -50,6 +50,10 @@ p:hover {
     font-size: 20px;
 }
 
+#blue_a {
+    color: #0078BE;
+}
+
 /* 
    ************************************************
    *          E S T I L O S  I N D E X            *
@@ -600,4 +604,25 @@ p:hover {
     position: absolute;
     top: 28px;
     left: 20px;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-img {
+    transform: translateX(-50%);
+    margin-left: 50%;
+}
+
+.modal-small {
+    height: 410px;
+}
+
+.small-alert {
+    width: 128px;
+}
+
+.margin-final {
+    margin: 40px 278px;
 }

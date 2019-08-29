@@ -1,11 +1,6 @@
 <?php
 	session_start();
-
-	if ($_SESSION['sesion']) {
-		
-	}else{
-	    header("Location:index.php");
-	}
+	if (!$_SESSION['sesion']) { header("Location:index.php"); }
 ?>
 
 <?php 
@@ -20,12 +15,12 @@
     $arr_assoc = mysqli_fetch_assoc($resultado);
     $nombreDir = $arr_assoc["nombreDir"];
 
-    $SQL            = "SELECT actualizado, faseRegistro FROM usuario WHERE idUsuario = $idUser;";
+    $SQL            = "SELECT actualizado, faseRegistro, pagado FROM usuario WHERE idUsuario = $idUser;";
     $res            = RunQuery($con, $SQL);
     $arr_user       = mysqli_fetch_assoc($res);
     $actualizado    = $arr_user["actualizado"];
     $faseRegistro   = $arr_user["faseRegistro"];
-
+    $pagado         = $arr_user["pagado"];
 ?>
 
 <!DOCTYPE html>
@@ -74,12 +69,12 @@
                         <a href="miCuenta.php">Mi Cuenta</a>
                     </li>
                     <li class="cont-option">
-                        <img src="static/img/user.png" alt="Actualizar Información">
+                        <img src="static/img/list.png" alt="Actualizar Información">
                         <a href="actualizar.php">Actualizar Información</a>
                     </li>
                     <li class="cont-option">
                         <img src="static/img/clipboard.png" alt="Registro al Congreso">
-                        <a href="registro.php">Registro al Congreso</a>
+                        <a id="blue_a" href="registro.php">Registro al Congreso</a>
                     </li>
                 </ul>
             </div>
@@ -171,22 +166,16 @@
                     $fechaHoraSalida  = $arr_assoc_reg["fechaHoraSalida"];
                     $monto            = $arr_assoc_reg["monto"];
 
+                    // convierto las fechas a un formato dia mes annio
                     $newFecha = date("d-m-Y", strtotime($fechaNacimiento));
                     $newFechaHoraLlegada = date("d-m-Y H:i", strtotime($fechaHoraLlegada));
                     $newFechaHoraSalida = date("d-m-Y H:i", strtotime($fechaHoraSalida));
 
-                    // convierto las fechas a un formato dia mes annio
-                    // $newFechaNac = date("d-m-Y", strtotime($fechaNac));
-                    // $newLlegada = date("d-M", strtotime($llegadaF));
-                    // $newLlegada .= " ".$llegadaH;
-                    // $newSalida  = date("d-M", strtotime($salidaF));
-                    // $newSalida  .= " ".$salidaH;
-
-                    if ($newFechaHoraLlegada == "") {
+                    if ($newFechaHoraLlegada == "0000-00-00 00:00:00") {
                         $newFechaHoraLlegada = "Aún no has agregado una fecha y hora de llegada.";
                     }
 
-                    if ($newFechaHoraSalida == "") {
+                    if ($newFechaHoraSalida == "0000-00-00 00:00:00") {
                         $newFechaHoraSalida = "Aún no has agregado una fecha y hora de llegada.";
                     }
 
@@ -255,7 +244,7 @@
                     $SQL             = "SELECT correo, fechaNacimiento, telefonoCelular, telefonoFijo, acompanantes 
                         FROM registrocongreso WHERE numSocio = $numSocio;";
                     $resSQLUP        = RunQuery($con, $SQL);
-                    $arr_ass_UP      = mysqli_fetch_assoc($resSQLUP);//Warning: mysqli_fetch_assoc() expects parameter 1 to be mysqli_result, boolean given in C:\xampp\htdocs\WebCIOFFRepo\webcioff\registro.php on line 258
+                    $arr_ass_UP      = mysqli_fetch_assoc($resSQLUP);
                     $correo          = $arr_ass_UP["correo"];
                     $fechaNacimiento = $arr_ass_UP["fechaNacimiento"];
                     $telefonoCelular = $arr_ass_UP["telefonoCelular"];
@@ -296,6 +285,9 @@
                                         <p><span>*</span>Acompañantes (separar cada uno de ellos con un espacio, en caso de no tener, 
                                         llena este campo con un guión "-")</p>
                                         <textarea rows="4" cols="73" name="acompanantes" class="input-area input-area-short" minlength="1" maxlength="499" required>'.$acompanantes.'</textarea>
+                                        <br><br>
+                                        <h4>Nota: Asegúrate de ingresar correctamente la fecha, la hora la puedes ingresar en formato de 24 hrs o 12 hrs (en ambos formatos es necesario
+                                        que especifiques si es a.m. o p.m.) </h4>
                                         <p><span>*</span>Fecha de llegada</p>
                                         <input type="date" name="llegadaF" class="input-form" required>
                                         <p><span>*</span>Hora de llegada</p>
@@ -309,6 +301,51 @@
                                             <input class="btn-main" type="submit" name="submit" style="margin-left: -10px;" value="Actualizar registro">
                                         </div>
                                     </form>
+                                </div>
+                            </div>
+                        </div>
+                    ';
+                    Disconnect($con);
+                } elseif ($actualizado == 1 && $faseRegistro == 4 && $pagado == 0) {
+                    // el usuario ya subio su recibo, el recibo se está comprobando
+
+                    echo '
+                        <div class="modal-container">
+                            <div class="modal-datos modal-small">
+                                <div class="modal-datos-top">
+                                    <h2>Registro al Congreso</h2>
+                                </div>
+                                <div class="modal-mid-container">
+                                    <br><br>
+                                    <img class="align-img small-alert" src="static/img/alert2.png" alt="Alerta"><br><br><br>
+                                    <h2 class="align-center">¡Perfecto! Estás a un paso de estar registrado</h2><br><br>
+                                    <h3 class="align-center">Estamos verificando tu recibo, una vez verificado podrás generar tu entrada.</h3>
+                                    <form class="btn-form" method="POST" name="formCorregir" action="corregirPDF.php">
+                                        <input style="display: none;" type="text" name="key" value="key">
+                                        <input class="btn-main darkblue-btn" type="submit" value="Corregir recibo">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    ';
+                    Disconnect($con);
+                } elseif ($actualizado == 1 && $faseRegistro == 4 && $pagado == 1) {
+                    // el usuario ya subio su recibo y puede generar su entrada en pdf
+
+                    echo '
+                        <div class="modal-container">
+                            <div class="modal-datos modal-small">
+                                <div class="modal-datos-top">
+                                    <h2>Registro al Congreso</h2>
+                                </div>
+                                <div class="modal-mid-container">
+                                    <br>
+                                    <img class="align-img" src="static/img/success.png" alt="Registro completado."><br><br>
+                                    <h2 class="align-center">¡Listo! Estás registrado</h2><br>
+                                    <h3 class="align-center">Tu recibo ha sido verificado, da clic al siguiente botón para generar tu entrada.</h3>
+                                    <div class="modal-datos-mid-bottom margin-final">
+                                        <input type="button" class="btn-main" onclick="window.location.href = \'entrada.php\';" value="Generar entrada">
+                                    </div>
                                 </div>
                             </div>
                         </div>

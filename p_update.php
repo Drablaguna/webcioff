@@ -6,6 +6,7 @@
 	if ($_SESSION['sesion'] && !empty($_POST)) {
 		
 		$idUsuario = $_SESSION["idUsuario"];
+		$numSocio  = $_SESSION["numSocio"];
 
 		$nombreGpo = $_POST["nombreGpo"];
 		$estado    = $_POST["estado"];
@@ -19,15 +20,15 @@
 
 	    $img1     = $ruta_imagen.$_FILES["img1"]["name"];
 	    $ext 	  = pathinfo($img1, PATHINFO_EXTENSION);
-	    $new_img1 = $ruta_imagen.$idUsuario."_1.".$ext;
+	    $new_img1 = $ruta_imagen.$numSocio."_1.".$ext;
 
 	    $img2     = $ruta_imagen.$_FILES["img2"]["name"];
 	    $ext 	  = pathinfo($img2, PATHINFO_EXTENSION);
-	    $new_img2 = $ruta_imagen.$idUsuario."_2.".$ext;
+	    $new_img2 = $ruta_imagen.$numSocio."_2.".$ext;
 
 	    $img3     = $ruta_imagen.$_FILES["img3"]["name"];
 	    $ext 	  = pathinfo($img3, PATHINFO_EXTENSION);
-	    $new_img3 = $ruta_imagen.$idUsuario."_3.".$ext;
+	    $new_img3 = $ruta_imagen.$numSocio."_3.".$ext;
 
 		include("Connection.php");
 		$conexion = Connect();

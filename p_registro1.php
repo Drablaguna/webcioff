@@ -35,8 +35,8 @@
 				break;
 			
 			default:
-				echo "habitacion: ".$habitacion."<br>";
-				echo "monto: ".$monto."<br>";
+				// error
+				$monto = 1;
 				break;
 		}
 
@@ -71,66 +71,32 @@
 		$nombreGpo = $gpoArr["nombreGpo"];
 		$cargoGpo  = $gpoArr["cargoGpo"];
 
-		// concateno fechas con horas para almacenar el datetime completo, si son vacias igualarlas a nada
-		if ($llegadaF != "" && $llegadaH != "" && $salidaF != "" && $salidaH != "") {
-			$newLlegada = $llegadaF." ".$llegadaH;
-			$newLlegada .= ":00";
-			$newSalida  = $salidaF." ".$salidaH;
-			$newSalida  .= ":00";
+		// concateno fechas con horas para almacenar el datetime completo
+		$newLlegada = $llegadaF." ".$llegadaH;
+		$newLlegada .= ":00";
+		$newSalida  = $salidaF." ".$salidaH;
+		$newSalida  .= ":00";
+
+		$SQL = "INSERT INTO registrocongreso(numSocio, marcaTemporal, correo, nombre, fechaNacimiento, estado,
+		 ciudad, telefonoCelular, telefonoFijo, grupo, puestoEnGrupo, habitacion, acompanantes,
+		  fechaHoraLlegada, fechaHoraSalida, monto) VALUES ('$numSocio', '$now', '$correo', '$nombreDir',
+		   '$fechaNac', '$estado', '$ciudad', '$telefono', '$telefonoFijo', '$nombreGpo', '$cargoGpo',
+		    '$habitacion', '$acompanantes', '$newLlegada', '$newSalida', '$monto');";
+		$query = RunQuery($conexion, $SQL);
+		
+		$sql_up_fase  = "UPDATE usuario SET faseRegistro = 1 WHERE idUsuario = $idUsuario;";
+		$qFase = RunQuery($conexion, $sql_up_fase);
+
+		if ($query && $qFase) {
+			Disconnect($conexion);
+			echo'<script type="text/javascript">
+				    alert("Registro al congreso satisfactorio.");
+				    window.location.href="registro.php";
+				    </script>';
 		} else {
-			$newLlegada = "";
-			$newSalida  = "";
-		}
-
-		// si la fase del registro es 0 o inicial, si el usuario quiere actualizar su informacion, en otra 
-		// ventana se resetea faseRegistro a 0, pero registrado ya estara en 1 y se ejecutara el update 
-		if ($faseRegistro == 0) {
-			if ($registrado == 1) {
-				// update
-				$SQL = "UPDATE registrocongreso SET marcaTemporal='$now' ,correo='$correo' ,nombre='$nombreDir'
-				 ,fechaNacimiento='$fechaNac',estado='$estado' ,ciudad='$ciudad' ,
-				 telefonoCelular='$telefono' ,telefonoFijo='$telefonoFijo' ,grupo='$nombreGpo'
-				  ,puestoEnGrupo='$cargoGpo' ,habitacion='$habitacion' ,acompanantes='$acompanantes'
-				   ,fechaHoraLlegada='$newLlegada' ,fechaHoraSalida='$newSalida' ,monto=$monto 
-				   WHERE numSocio = $numSocio;";
-				$query = RunQuery($conexion, $SQL);
-
-				if ($query) {
-					$sql_up_fase  = "UPDATE usuario SET faseRegistro = 1 WHERE idUsuario = $idUsuario;";
-					RunQuery($conexion, $sql_up_fase);
-					Disconnect($conexion);
-					echo'<script type="text/javascript">
-						    alert("Actualización de datos de registro al congreso satisfactoria.");
-						    window.location.href="registro.php";
-						    </script>';
-				} else {
-					Disconnect($conexion);
-			    	header("Location:error.php");
-			    }
-			} else {
-				// insert
-				$SQL = "INSERT INTO registrocongreso(numSocio, marcaTemporal, correo, nombre, fechaNacimiento, estado,
-				 ciudad, telefonoCelular, telefonoFijo, grupo, puestoEnGrupo, habitacion, acompanantes,
-				  fechaHoraLlegada, fechaHoraSalida, monto) VALUES ('$numSocio', '$now', '$correo', '$nombreDir',
-				   '$fechaNac', '$estado', '$ciudad', '$telefono', '$telefonoFijo', '$nombreGpo', '$cargoGpo',
-				    '$habitacion', '$acompanantes', '$newLlegada', '$newSalida', '$monto');";
-				$query = RunQuery($conexion, $SQL);
-				
-				if ($query) {
-					$sql_up_fase  = "UPDATE usuario SET faseRegistro = 1 WHERE idUsuario = $idUsuario;";
-					RunQuery($conexion, $sql_up_fase);
-					Disconnect($conexion);
-					echo'<script type="text/javascript">
-						    alert("Registro al congreso satisfactorio.");
-						    window.location.href="registro.php";
-						    </script>';
-				} else {
-					Disconnect($conexion);
-			    	header("Location:error.php");
-			    }
-			}
-		}
-
+			Disconnect($conexion);
+	    	header("Location:error.php");
+	    }
     } else {
     	header("Location:index.php");
     }
