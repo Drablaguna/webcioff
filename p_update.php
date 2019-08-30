@@ -44,15 +44,6 @@
 		if($n != 0) {
 			// update
 
-			// igualo arr almacenado en SESSION a los datos a actualizar para actualizar el registro al congreso
-			$_SESSION["arrActDatos"] = array(
-				"nombreDir"=>$nombreDir,
-				"estado"=>$estado,
-				"ciudad"=>$ciudad,
-				"nombreGpo"=>$nombreGpo,
-				"cargoGpo"=>$cargoGpo
-			);
-
 			$SQL = "UPDATE grupo SET nombreGpo='$nombreGpo', estado='$estado', ciudad='$ciudad',
 			 nombreDir='$nombreDir', cargoGpo='$cargoGpo', resena='$resena', contacto='$contacto',
 			 img1='$new_img1', img2='$new_img2', img3='$new_img3' 
@@ -86,13 +77,11 @@
 
 			$SQL = "INSERT INTO grupo (idUsuario, nombreGpo, estado, ciudad, nombreDir, cargoGpo,
 			 resena, contacto, img1, img2, img3) VALUES ($idUsuario, '$nombreGpo', '$estado', '$ciudad',
-			  '$nombreDir', '$cargoGpo', '$resena', '$contacto', '$new_img1', '$new_img2', '$new_img3');";
+			  '$nombreDir', '$cargoGpo', '$resena', '$contacto', '$new_img1', '$new_img2', '$new_img3');
+			  UPDATE usuario SET actualizado = 1 WHERE idUsuario = $idUsuario;";
 			$query = RunQuery($conexion, $SQL);
 
-			$new_SQL  = "UPDATE usuario SET actualizado = 1 WHERE idUsuario = $idUsuario";
-			$queryAct = RunQuery($conexion, $new_SQL);
-
-			if ($query && $queryAct) {
+			if ($query) {
 		        if (isset($_FILES["img1"])) {
 		            move_uploaded_file($_FILES["img1"]["tmp_name"], $new_img1);
 		        }
