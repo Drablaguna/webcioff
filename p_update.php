@@ -88,10 +88,14 @@
 			 resena, contacto, img1, img2, img3) VALUES ($idUsuario, '$nombreGpo', '$estado', '$ciudad',
 			  '$nombreDir', '$cargoGpo', '$resena', '$contacto', '$new_img1', '$new_img2', '$new_img3');
 			  UPDATE usuario SET actualizado = 1 WHERE idUsuario = $idUsuario;";
-			$query = RunQuery($conexion, $SQL);
+			// $query = mysqli_query($conexion, $SQL);
+			if (!mysqli_query($conexion, $SQL)) {
+				echo "<br>-> error: ".mysqli_error($con);
+			}
 			echo '<br>-> $SQL: '.$SQL.'<br>';
-			echo '<br>-> $query: '.$query.'<br>';
-			if ($query) {
+			// echo '<br>-> $query: '.$query.'<br>';
+			// if ($query) {
+			if (1==2) {
 				echo '<br>-> Query realizada<br>';
 		        if (isset($_FILES["img1"])) {
 		            move_uploaded_file($_FILES["img1"]["tmp_name"], $new_img1);
