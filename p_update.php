@@ -86,13 +86,20 @@
 			echo '<br>-> Inst: insert<br>';
 			$SQL = "INSERT INTO grupo (idUsuario, nombreGpo, estado, ciudad, nombreDir, cargoGpo,
 			 resena, contacto, img1, img2, img3) VALUES ($idUsuario, '$nombreGpo', '$estado', '$ciudad',
-			  '$nombreDir', '$cargoGpo', '$resena', '$contacto', '$new_img1', '$new_img2', '$new_img3');
-			  UPDATE usuario SET actualizado = 1 WHERE idUsuario = $idUsuario;";
+			  '$nombreDir', '$cargoGpo', '$resena', '$contacto', '$new_img1', '$new_img2', '$new_img3');";
+			$SQL2 = "UPDATE usuario SET actualizado = 1 WHERE idUsuario = $idUsuario;";
 			// $query = mysqli_query($conexion, $SQL);
 			if (!mysqli_query($conexion, $SQL)) {
 				echo "<br>-> error: ".mysqli_error($conexion);
 			}
+			if (!mysqli_query($conexion, $SQL2)) {
+				echo "<br>-> error2: ".mysqli_error($conexion);
+			}
 			echo '<br>-> $SQL: '.$SQL.'<br>';
+			echo '<br>-> $SQL2: '.$SQL2.'<br>';
+			if ($query && $query2) {
+				echo '<br>-> Query realizada<br>';
+			}
 			// echo '<br>-> $query: '.$query.'<br>';
 			// if ($query) {
 			if (1==2) {

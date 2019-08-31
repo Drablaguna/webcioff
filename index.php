@@ -48,7 +48,7 @@
     </div>
 
     <div class="version-text">
-        <h4>Ver #1.12</h4>
+        <h4>Ver #1.13</h4>
     </div>
 
 </body>
