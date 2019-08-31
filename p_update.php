@@ -90,7 +90,7 @@
 			  UPDATE usuario SET actualizado = 1 WHERE idUsuario = $idUsuario;";
 			// $query = mysqli_query($conexion, $SQL);
 			if (!mysqli_query($conexion, $SQL)) {
-				echo "<br>-> error: ".mysqli_error($con);
+				echo "<br>-> error: ".mysqli_error($conexion);
 			}
 			echo '<br>-> $SQL: '.$SQL.'<br>';
 			// echo '<br>-> $query: '.$query.'<br>';
