@@ -2,7 +2,10 @@
 
 	// se crea la sesión
 	session_start();
-
+	print_r($_SESSION);
+	echo "<br>";
+	print_r($_POST);
+	echo "<br>";
 	if ($_SESSION['sesion'] && !empty($_POST)) {
 		echo "+------------------------------ D E B U G ------------------------------+<br>";
 		print_r($_SESSION);
