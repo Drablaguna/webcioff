@@ -113,7 +113,7 @@
                                         <p><span>*</span>Fecha de Nacimiento</p>
                                         <input type="date" name="fechaNac" class="input-form" placeholder="dd/mm/aaaa" required>
                                         <p><span>*</span>Teléfono Celular</p>
-                                        <input type="text" name="telefono" class="input-form" placeholder="442 123 4567" minlength="5" maxlength="49" required>
+                                        <input type="text" name="telefono" class="input-form" placeholder="4421234567" maxlength="10" required>
                                         <p>Teléfono Fijo</p>
                                         <input type="text" name="telefonoFijo" class="input-form" placeholder="123 4567" minlength="5" maxlength="49">
                                         <p><span>*</span>Tipo de Habitación</p>
@@ -272,7 +272,7 @@
                                         <p><span>*</span>Fecha de Nacimiento</p>
                                         <input type="date" name="fechaNac" class="input-form" value="'.$fechaNacimiento.'" required>
                                         <p><span>*</span>Teléfono Celular</p>
-                                        <input type="text" name="telefono" class="input-form" minlength="5" maxlength="49" value="'.$telefonoCelular.'" required>
+                                        <input type="text" name="telefono" class="input-form" maxlength="10" value="'.$telefonoCelular.'" required>
                                         <p>Teléfono Fijo</p>
                                         <input type="text" name="telefonoFijo" class="input-form" minlength="5" maxlength="49" value="'.$telefonoFijo.'">
                                         <p><span>*</span>Tipo de Habitación</p>

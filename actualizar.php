@@ -121,7 +121,7 @@
                     <div class="modal-mid-container">
                         <?php
                             echo '
-                                <form class="modal-datos-mid" name="formActInf" method="POST" action="p_update.php" enctype="multipart/form-data">
+                                <form id="formUpdate" class="modal-datos-mid" name="formActInf" method="POST" action="p_update.php" enctype="multipart/form-data">
                                     <h4>Nota: Las fotos que subas aparecerán en la pantalla de inicio de sesión para
                                     todos los demás usuarios.<br>
                                     Si estás actualizando tus datos ten en cuenta que las fotos que hayas subido
@@ -141,8 +141,28 @@
                                     <p>Breve Reseña del Grupo o Festival</p>
                                     <textarea  rows="4" cols="73" name="resena" class="input-area" minlength="10" maxlength="999">'.$resena.'</textarea>
                                     <p><span>*</span>Datos de Contacto y Redes Sociales (separar cada dato o enlace con un espacio)</p>
-                                    <textarea  rows="4" cols="73" name="contacto" class="input-area" minlength="10" maxlength="299" required>'.$contacto.'</textarea>
+                                    <textarea  rows="4" cols="73" name="contacto" class="input-area" minlength="10" maxlength="599" required>'.$contacto.'</textarea>
+                                    ';
+                            if ($actualizado == 1) {
+                                echo '
                                     <p>Para mejores resultados asegúrate de subir fotos en tamaño rectangular (ancho mayor y alto menor).</p>
+                                    <p>Foto 1</p>
+                                    <input type="file" accept="image/*" name="img1" id="img1" class="input-form input-file">
+                                    <p>Foto 2</p>
+                                    <input type="file" accept="image/*" name="img2" id="img2" class="input-form input-file">
+                                    <p>Foto 3</p>
+                                    <input type="file" accept="image/*" name="img3" id="img3" class="input-form input-file">
+                                    
+                                    <div class="modal-datos-mid-bottom">
+                                        <input class="btn-main" type="submit" name="submit" value="Actualizar">
+                                    </div>
+
+                                </form>
+                                ';
+                            } else {
+                                echo '
+                                    <p>Para mejores resultados asegúrate de subir fotos en tamaño rectangular (ancho mayor y alto menor).
+                                    Como es el primer ingreso de tu información es requerido que subas fotos.</p>
                                     <p><span>*</span>Foto 1</p>
                                     <input type="file" accept="image/*" name="img1" id="img1" class="input-form input-file" required>
                                     <p><span>*</span>Foto 2</p>
@@ -155,7 +175,8 @@
                                     </div>
 
                                 </form>
-                            ';
+                                ';
+                            }
                         ?>
                     </div>
                 </div>

@@ -5,6 +5,10 @@
 
 	if ($_SESSION['sesion'] && !empty($_POST)) {
 		
+		$sw1 = true;
+		$sw2 = true;
+		$sw3 = true;
+
 		$idUsuario = $_SESSION["idUsuario"];
 		$numSocio  = $_SESSION["numSocio"];
 
@@ -17,19 +21,22 @@
 		$contacto  = $_POST["contacto"];
 		
 	    $ruta_imagen = "./fotosGrupos/";
-
-	    $img1     = $ruta_imagen.$_FILES["img1"]["name"];
+    	
+    	$img1     = $ruta_imagen.$_FILES["img1"]["name"];
 	    $ext 	  = pathinfo($img1, PATHINFO_EXTENSION);
 	    $new_img1 = $ruta_imagen.$numSocio."_1.".$ext;
-
-	    $img2     = $ruta_imagen.$_FILES["img2"]["name"];
+	    if ($ext == "") { $sw1 = false; }
+    
+    	$img2     = $ruta_imagen.$_FILES["img2"]["name"];
 	    $ext 	  = pathinfo($img2, PATHINFO_EXTENSION);
 	    $new_img2 = $ruta_imagen.$numSocio."_2.".$ext;
-
-	    $img3     = $ruta_imagen.$_FILES["img3"]["name"];
+	    if ($ext == "") { $sw2 = false; }
+    	
+    	$img3     = $ruta_imagen.$_FILES["img3"]["name"];
 	    $ext 	  = pathinfo($img3, PATHINFO_EXTENSION);
 	    $new_img3 = $ruta_imagen.$numSocio."_3.".$ext;
-
+	    if ($ext == "") { $sw3 = false; }
+	    
 		include("Connection.php");
 		$conexion = Connect();
 		
@@ -45,24 +52,22 @@
 			// update
 
 			$SQL = "UPDATE grupo SET nombreGpo='$nombreGpo', estado='$estado', ciudad='$ciudad',
-			 nombreDir='$nombreDir', cargoGpo='$cargoGpo', resena='$resena', contacto='$contacto',
-			 img1='$new_img1', img2='$new_img2', img3='$new_img3' 
-			 WHERE idUsuario = $idUsuario;";
+			 nombreDir='$nombreDir', cargoGpo='$cargoGpo', resena='$resena', contacto='$contacto'";
+
+			if ($sw1) { $SQL = $SQL.", img1='$new_img1'"; }
+			if ($sw2) { $SQL = $SQL.", img2='$new_img2'"; }
+			if ($sw3) { $SQL = $SQL.", img3='$new_img3'"; }
+
+			$SQL = $SQL." WHERE idUsuario = $idUsuario;";
+			
 			$query = RunQuery($conexion, $SQL);
 
 			if ($query) {
-		        if (isset($_FILES["img1"])) {
-		            move_uploaded_file($_FILES["img1"]["tmp_name"], $new_img1);
-		        }
-		        if (isset($_FILES["img2"])) {
-		            move_uploaded_file($_FILES["img2"]["tmp_name"], $new_img2);
-		        }
-		        if (isset($_FILES["img3"])) {
-		            move_uploaded_file($_FILES["img3"]["tmp_name"], $new_img3);
-		        }
+		        if ($sw1) { move_uploaded_file($_FILES["img1"]["tmp_name"], $new_img1); }
+		        if ($sw2) { move_uploaded_file($_FILES["img2"]["tmp_name"], $new_img2); }
+		        if ($sw3) { move_uploaded_file($_FILES["img3"]["tmp_name"], $new_img3); }
 
 		        Disconnect($conexion);
-
 			    echo'<script type="text/javascript">
 					    alert("Actualización de información satisfactoria.");
 					    window.location.href="miCuenta.php";
@@ -80,20 +85,13 @@
 			  '$nombreDir', '$cargoGpo', '$resena', '$contacto', '$new_img1', '$new_img2', '$new_img3');
 			  UPDATE usuario SET actualizado = 1 WHERE idUsuario = $idUsuario;";
 			$query = mysqli_multi_query($conexion, $SQL);
-
+			
 			if ($query) {
-		        if (isset($_FILES["img1"])) {
-		            move_uploaded_file($_FILES["img1"]["tmp_name"], $new_img1);
-		        }
-		        if (isset($_FILES["img2"])) {
-		            move_uploaded_file($_FILES["img2"]["tmp_name"], $new_img2);
-		        }
-		        if (isset($_FILES["img3"])) {
-		            move_uploaded_file($_FILES["img3"]["tmp_name"], $new_img3);
-		        }
+	            move_uploaded_file($_FILES["img1"]["tmp_name"], $new_img1);
+	            move_uploaded_file($_FILES["img2"]["tmp_name"], $new_img2);
+	            move_uploaded_file($_FILES["img3"]["tmp_name"], $new_img3);
 		    
 				Disconnect($conexion);
-
 				echo'<script type="text/javascript">
 					    alert("Actualización de información satisfactoria.");
 					    window.location.href="miCuenta.php";
@@ -102,7 +100,6 @@
 		    	Disconnect($conexion);
 		    	header("Location:error.php");
 		    }
-
 		}
     } else {
     	header("Location:index.php");
