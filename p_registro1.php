@@ -4,62 +4,55 @@
 	session_start();
 
 	if ($_SESSION['sesion'] && !empty($_POST)) {
-		
+		$_SESSION["tiempoIn"] = time();
+	    if ($_SESSION["tiempoIn"] >= $_SESSION["tiempoLim"]) {
+	        echo'<script type="text/javascript">
+	            alert("Tiempo de sesión expirado, vuelve a iniciar sesión.");
+	            window.location.href="p_logout.php";
+	            </script>';
+	    }
+	    include("Connection.php");
 		$idUsuario    = $_SESSION["idUsuario"];
 		$numSocio     = $_SESSION["numSocio"];
 
 		$correo 	  = $_POST["correo"];
-		$fechaNac 	  = $_POST["fechaNac"];
+		$diaFec 	  = $_POST["diaFec"];
+		$mesFec 	  = $_POST["mesFec"];
+		$anioFec 	  = $_POST["anioFec"];
 		$telefono 	  = $_POST["telefono"];
 		$telefonoFijo = $_POST["telefonoFijo"];
+		$mesPago      = $_POST["mesPago"];
 		if ($telefonoFijo == "") { $telefonoFijo = "-"; }
 
 		$habitacion   = $_POST["habitacion"];
-		$monto = 0;
-		
-		switch ($habitacion) {
-			case "Individual":
-				$monto = 1000;
-				break;
+		$monto = 0.00;
+		$now = date("Y-m-d H:i:s");
+		$thisMonth = date("m");
 
-			case "Doble":
-				$monto = 2000;
-				break;
-
-			case "Triple":
-				$monto = 3000;
-				break;
-
-			case "Cuadruple":
-				$monto = 4000;
-				break;
-			
-			default:
-				// error
-				$monto = 1;
-				break;
+		if ($mesPago == 0) {
+			$monto = calcularMonto($thisMonth, $habitacion);
 		}
 
 		$acompanantes = $_POST["acompanantes"];
 
-		$llegadaF 	  = $_POST["llegadaF"];
-		$llegadaH 	  = $_POST["llegadaH"];
-		$salidaF 	  = $_POST["salidaF"];
-		$salidaH 	  = $_POST["salidaH"];
+		$diaFecLleg = $_POST["diaFecLleg"];
+		$mesFecLleg = $_POST["mesFecLleg"];
+		$llegadaH = $_POST["llegadaH"];
+		$llegadaM = $_POST["llegadaM"];
+		$diaFecSal = $_POST["diaFecSal"];
+		$mesFecSal = $_POST["mesFecSal"];
+		$salidaH = $_POST["salidaH"];
+		$salidaM = $_POST["salidaM"];
 
-		$now = date("Y-m-d H:i:s");
-
-		include("Connection.php");
 		$conexion = Connect();
 
 		mysqli_query($conexion, "SET NAMES 'utf8'");
 
-		$SQLFase   = "SELECT faseRegistro, registrado FROM usuario WHERE idUsuario = $idUsuario;";
+		$SQLFase   = "SELECT faseRegistro FROM usuario WHERE idUsuario = $idUsuario;";
 		$queryFase = RunQuery($conexion, $SQLFase);
 		$faseArr   = mysqli_fetch_assoc($queryFase);
 
 		$faseRegistro = $faseArr["faseRegistro"];
-		$registrado   = $faseArr["registrado"];
 
 		$SQLGpo = "SELECT nombreDir, estado, ciudad, nombreGpo, cargoGpo FROM grupo WHERE idUsuario = $idUsuario;";
 		$queryG = RunQuery($conexion, $SQLGpo);
@@ -71,12 +64,11 @@
 		$nombreGpo = $gpoArr["nombreGpo"];
 		$cargoGpo  = $gpoArr["cargoGpo"];
 
-		// concateno fechas con horas para almacenar el datetime completo
-		$newLlegada = $llegadaF." ".$llegadaH;
-		$newLlegada .= ":00";
-		$newSalida  = $salidaF." ".$salidaH;
-		$newSalida  .= ":00";
-
+		// concateno fechas con horas para almacenar el datetime completo - 2019-11-15 22:30:00
+		$fechaNac = $anioFec."-".$mesFec."-".$diaFec;
+		$newLlegada = "2019-".$mesFecLleg."-".$diaFecLleg." ".$llegadaH.":".$llegadaM.":00";
+		$newSalida = "2019-".$mesFecSal."-".$diaFecSal." ".$salidaH.":".$salidaM.":00";
+		
 		$SQL = "INSERT INTO registrocongreso(numSocio, marcaTemporal, correo, nombre, fechaNacimiento, estado,
 		 ciudad, telefonoCelular, telefonoFijo, grupo, puestoEnGrupo, habitacion, acompanantes,
 		  fechaHoraLlegada, fechaHoraSalida, monto) VALUES ('$numSocio', '$now', '$correo', '$nombreDir',

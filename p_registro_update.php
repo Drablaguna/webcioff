@@ -2,6 +2,13 @@
 	session_start();
 
 	if ($_SESSION['sesion']) {
+		$_SESSION["tiempoIn"] = time();
+	    if ($_SESSION["tiempoIn"] >= $_SESSION["tiempoLim"]) {
+	        echo'<script type="text/javascript">
+	            alert("Tiempo de sesión expirado, vuelve a iniciar sesión.");
+	            window.location.href="p_logout.php";
+	            </script>';
+	    }
 		if (!empty($_POST)) {
 			$idUsuario = $_SESSION["idUsuario"];
 			$numSocio  = $_SESSION["numSocio"];
@@ -24,43 +31,35 @@
 			$cargoGpo  = $gpoArr["cargoGpo"];
 
 			$correo 		 = $_POST["correo"];
-			$fechaNacimiento = $_POST["fechaNac"];
+			$diaFec 		 = $_POST["diaFec"];
+			$mesFec 		 = $_POST["mesFec"];
+			$anioFec 		 = $_POST["anioFec"];
 			$telefonoCelular = $_POST["telefono"];
 			$telefonoFijo 	 = $_POST["telefonoFijo"];
 			$habitacion 	 = $_POST["habitacion"];
 			$acompanantes    = $_POST["acompanantes"];
 
+			$mesPago = $_POST["mesPago"];
 			$habitacion = $_POST["habitacion"];
-			$monto = 0;
-			
-			switch ($habitacion) {
-				case "Individual":
-					$monto = 1000;
-					break;
+			$monto = 0.00;			
+			$thisMonth = date("m");
 
-				case "Doble":
-					$monto = 2000;
-					break;
-
-				case "Triple":
-					$monto = 3000;
-					break;
-
-				case "Cuadruple":
-					$monto = 4000;
-					break;
-				
-				default:
-					// error
-					$monto = 1;
-					break;
+			if ($mesPago == 0) {
+				$monto = calcularMonto($thisMonth, $habitacion);
 			}
-			
-			$newLlegada = $_POST["llegadaF"]." ".$_POST["llegadaH"];
-			$newSalida = $_POST["salidaF"]." ".$_POST["salidaH"];
 
-			$fechaHoraLlegada = $newLlegada;
-			$fechaHoraSalida  = $newSalida;
+			$diaFecLleg = $_POST["diaFecLleg"];
+			$mesFecLleg = $_POST["mesFecLleg"];
+			$llegadaH = $_POST["llegadaH"];
+			$llegadaM = $_POST["llegadaM"];
+			$diaFecSal = $_POST["diaFecSal"];
+			$mesFecSal = $_POST["mesFecSal"];
+			$salidaH = $_POST["salidaH"];
+			$salidaM = $_POST["salidaM"];
+			// 2019-11-15 22:30:00
+			$fechaNacimiento = $anioFec."-".$mesFec."-".$diaFec;
+			$fechaHoraLlegada = "2019-".$mesFecLleg."-".$diaFecLleg." ".$llegadaH.":".$llegadaM.":00";
+			$fechaHoraSalida  = "2019-".$mesFecSal."-".$diaFecSal." ".$salidaH.":".$salidaM.":00";
 			
 	    	$SQL   = "UPDATE registrocongreso SET marcaTemporal='$now' ,correo='$correo' ,nombre='$nombreDir'
 				 ,fechaNacimiento='$fechaNacimiento',estado='$estado' ,ciudad='$ciudad' ,
@@ -68,6 +67,7 @@
 				  ,puestoEnGrupo='$cargoGpo' ,habitacion='$habitacion' ,acompanantes='$acompanantes'
 				   ,fechaHoraLlegada='$fechaHoraLlegada' ,fechaHoraSalida='$fechaHoraSalida' ,monto=$monto 
 				   WHERE numSocio = $numSocio;";
+			
 		    $query = RunQuery($con, $SQL);
 		    
 		    $sql_up_fase  = "UPDATE usuario SET faseRegistro = 1 WHERE idUsuario = $idUsuario;";

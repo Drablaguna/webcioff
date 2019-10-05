@@ -1,6 +1,13 @@
 <?php
 	session_start();
 	if (!$_SESSION['sesion']) { header("Location:index.php"); }
+    $_SESSION["tiempoIn"] = time();
+    if ($_SESSION["tiempoIn"] >= $_SESSION["tiempoLim"]) {
+        echo'<script type="text/javascript">
+            alert("Tiempo de sesión expirado, vuelve a iniciar sesión.");
+            window.location.href="p_logout.php";
+            </script>';
+    }
 ?>
 
 <?php

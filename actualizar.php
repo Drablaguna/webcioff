@@ -1,6 +1,13 @@
 <?php
 	session_start();
     if (!$_SESSION['sesion']) { header("Location:index.php"); }
+    $_SESSION["tiempoIn"] = time();
+    if ($_SESSION["tiempoIn"] >= $_SESSION["tiempoLim"]) {
+        echo'<script type="text/javascript">
+            alert("Tiempo de sesión expirado, vuelve a iniciar sesión.");
+            window.location.href="p_logout.php";
+            </script>';
+    }
 ?>
 
 <?php 
@@ -12,10 +19,11 @@
     
     // checo si el usuario ya esta actualizado para poder asignar valores vacios a las variables para los
     // placeholders y no me arroje error
-    $SQLactualizado = "SELECT actualizado FROM usuario WHERE idUsuario = $idUser";
+    $SQLactualizado = "SELECT actualizado, estatus FROM usuario WHERE idUsuario = $idUser";
     $r = RunQuery($con, $SQLactualizado);
     $arr_r = mysqli_fetch_assoc($r);
     $actualizado = $arr_r["actualizado"];
+    $estatus = $arr_r["estatus"];
 
     // inicializo las variables en "" para que no haya error
     $nombreGpo = "";
@@ -128,6 +136,8 @@
                                     en el pasado serán reemplazadas por las que mandes en este formulario.</h4>
                                     <br>
                                     <p><span>*</span>Campos requeridos</p>
+                                    <p><span>*</span>Estatus CIOFF</p>
+                                    <input type="text" name="estatus" class="input-form" minlength="1" maxlength="99" value="'.$estatus.'" required>
                                     <p><span>*</span>Nombre de Grupo (o festival en caso de que la cuenta pertenezca a uno)</p>
                                     <input type="text" name="nombreGpo" class="input-form" minlength="10" maxlength="199" value="'.$nombreGpo.'" required>
                                     <p><span>*</span>Estado</p>
@@ -161,7 +171,7 @@
                                 ';
                             } else {
                                 echo '
-                                    <p>Para mejores resultados asegúrate de subir fotos en tamaño rectangular (ancho mayor y alto menor).
+                                    <p>Para mejores resultados asegúrate de subir fotos en tamaño rectangular (ancho mayor y alto menor)
                                     Como es el primer ingreso de tu información es requerido que subas fotos.</p>
                                     <p><span>*</span>Foto 1</p>
                                     <input type="file" accept="image/*" name="img1" id="img1" class="input-form input-file" required>

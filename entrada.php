@@ -1,6 +1,13 @@
 <?php 
 	session_start();
 	if ($_SESSION["sesion"]) {
+		$_SESSION["tiempoIn"] = time();
+	    if ($_SESSION["tiempoIn"] >= $_SESSION["tiempoLim"]) {
+	        echo'<script type="text/javascript">
+	            alert("Tiempo de sesión expirado, vuelve a iniciar sesión.");
+	            window.location.href="p_logout.php";
+	            </script>';
+	    }
 		$numSocio  = $_SESSION["numSocio"];
 
 		require("fpdf.php");
@@ -23,6 +30,7 @@
 	    $grupo = $arr_sql2["grupo"];
 	    $puestoEnGrupo = $arr_sql2["puestoEnGrupo"];
 	    $habitacion = $arr_sql2["habitacion"];
+	    if ($habitacion == "Cuadruple") { $habitacion = "Cuádruple"; }
 	    $acompanantes = $arr_sql2["acompanantes"];
 		$newAcompanantes = explode(",", $acompanantes);
 		$size = sizeof($newAcompanantes);
@@ -46,7 +54,7 @@
 		$pdf->Cell(0,10,"", 0, 1, "C");
 		$pdf->Cell(0,10,"", 0, 1, "C");
 		$pdf->Cell(0,10,"", 0, 1, "C");
-		$pdf->Cell(0,10,"Entrada al Congreso", 0, 1, "C");
+		$pdf->Cell(0,10,"7mo Congreso Nacional CIOFF", 0, 1, "C");
 		$pdf->Cell(0,10,utf8_decode("Santiago de Querétaro - Querétaro"), 0, 1, "C");
 		$pdf->Cell(0,10,"", 0, 1, "C");
 		$pdf->Cell(0,10,utf8_decode($string1), 0, 1, "C");

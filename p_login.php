@@ -53,6 +53,11 @@
 				$_SESSION["numSocio"]  = $numSocio;
                 $_SESSION["idUsuario"] = $fila["idUsuario"];
 				$_SESSION["sesion"]    = true;
+				$_SESSION["nombreInvitado"] = "";
+				$_SESSION["arrInvitado"] = array();
+				$_SESSION["tiempoIn"]  = time();
+				$_SESSION["tiempoLim"] = time() + 60000;
+				// $_SESSION["tiempoLim"] = time() + 600;
 				// arreglo que almacena la actualizacion de info para ponerla en el registro al congreso
 				// $_SESSION["arrActDatos"]; para acceder $_SESSION["arrActDatos"][0]["nombreField"]=="loQueSea";
 

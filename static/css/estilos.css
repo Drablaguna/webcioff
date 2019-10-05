@@ -181,7 +181,7 @@ p:hover {
 */
 
 .container {
-    background-color: #F4F7FC;
+    background-color: #dfe8f7;
     height: 100%;
     width: 100%;
 }
@@ -281,6 +281,7 @@ p:hover {
     width: 65%;
     left: 61%;
     top: 1%;
+    z-index: 0;
     transform: translateX(-50%);
     position: fixed;
 }
@@ -295,7 +296,7 @@ p:hover {
 .alerta-bckg {
     width: 100%;
     height: 100%;
-    z-index: 1;
+    z-index: 3;
     position: absolute;
     background-color: rgba(0,0,0,0.3);
 }
@@ -312,7 +313,7 @@ p:hover {
     position: absolute;
     top: 50%;
     left: 50%;
-    /*z-index: 2;*/
+    z-index: 3;
     transform: translate(-50%, -50%);
     -webkit-box-shadow: 10px 10px 12px 2px rgba(0,0,0,0.42);
     -moz-box-shadow: 10px 10px 12px 2px rgba(0,0,0,0.42);
@@ -379,6 +380,7 @@ p:hover {
     position: relative;
     background-color: #FDFCFC;
     justify-content: center;
+    z-index: 2;
     align-items: center;
     flex-direction: column;
     -webkit-box-shadow: 10px 10px 12px 2px rgba(0,0,0,0.42);
@@ -418,7 +420,7 @@ p:hover {
 }
 
 .modal-datos-mid p {
-    width: 100%;
+    width: 97%;
     font-weight: 600;
     font-size: 15px;
     padding-bottom: 10px;
@@ -627,79 +629,23 @@ p:hover {
     margin: 40px 278px;
 }
 
+#bigText {
+    font-size: 22px;
+    color: #DC1F1A;
+    text-align: center;
+    display: block;
+}
+
 /* 
    ************************************************
-   *          B A R R A  P R O G R E S O          *
+   *             C O M B O  B O X E S             *
    ************************************************
 */
 
-progress {
-  vertical-align: baseline;
+.comboBox {
+    width: 17%;
 }
 
-@-webkit-keyframes progress-bar-stripes {
-  from {
-    background-position: 1rem 0;
-  }
-  to {
-    background-position: 0 0;
-  }
+.monthCombo {
+    width: 21%;
 }
-
-@keyframes progress-bar-stripes {
-  from {
-    background-position: 1rem 0;
-  }
-  to {
-    background-position: 0 0;
-  }
-}
-
-.progress {
-  display: -ms-flexbox;
-  display: flex;
-  height: 1rem;
-  width: 97%;
-  overflow: hidden;
-  font-size: 0.75rem;
-  background-color: #e9ecef;
-  border-radius: 0.25rem;
-}
-
-.progress-bar {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -ms-flex-pack: center;
-  justify-content: center;
-  color: #fff;
-  text-align: center;
-  white-space: nowrap;
-  background-color: #007bff;
-  transition: width 0.6s ease;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .progress-bar {
-    transition: none;
-  }
-}
-
-.progress-bar-striped {
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
-  background-size: 1rem 1rem;
-}
-
-.progress-bar-animated {
-  -webkit-animation: progress-bar-stripes 1s linear infinite;
-  animation: progress-bar-stripes 1s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .progress-bar-animated {
-    -webkit-animation: none;
-    animation: none;
-  }
-}
-

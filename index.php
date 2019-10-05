@@ -1,6 +1,7 @@
 <?php
     session_start();
     // si la sesion no esta vacia, si no esta vacia y existe 'sesion' volver a miCuenta
+    
     if (!empty($_SESSION)) {
         if ($_SESSION['sesion']) {
             header("Location:miCuenta.php");
@@ -48,7 +49,7 @@
     </div>
 
     <div class="version-text">
-        <h4>Ver 1.21</h4>
+        <h4>Ver 1.22</h4>
     </div>
 
 </body>

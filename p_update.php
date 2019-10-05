@@ -4,7 +4,13 @@
 	session_start();
 
 	if ($_SESSION['sesion'] && !empty($_POST)) {
-		
+		$_SESSION["tiempoIn"] = time();
+	    if ($_SESSION["tiempoIn"] >= $_SESSION["tiempoLim"]) {
+	        echo'<script type="text/javascript">
+	            alert("Tiempo de sesión expirado, vuelve a iniciar sesión.");
+	            window.location.href="p_logout.php";
+	            </script>';
+	    }		
 		$sw1 = true;
 		$sw2 = true;
 		$sw3 = true;
@@ -19,6 +25,7 @@
 		$cargoGpo  = $_POST["cargoGpo"];
 		$resena    = $_POST["resena"];
 		$contacto  = $_POST["contacto"];
+		$estatus   = $_POST["estatus"];
 		
 	    $ruta_imagen = "./fotosGrupos/";
     	
@@ -58,9 +65,10 @@
 			if ($sw2) { $SQL = $SQL.", img2='$new_img2'"; }
 			if ($sw3) { $SQL = $SQL.", img3='$new_img3'"; }
 
-			$SQL = $SQL." WHERE idUsuario = $idUsuario;";
+			$SQL = $SQL." WHERE idUsuario = $idUsuario; ";
+			$SQL = $SQL."UPDATE usuario SET estatus='$estatus' WHERE idUsuario = $idUsuario;";
 			
-			$query = RunQuery($conexion, $SQL);
+			$query = mysqli_multi_query($conexion, $SQL);
 
 			if ($query) {
 		        if ($sw1) { move_uploaded_file($_FILES["img1"]["tmp_name"], $new_img1); }
@@ -83,7 +91,7 @@
 			$SQL = "INSERT INTO grupo (idUsuario, nombreGpo, estado, ciudad, nombreDir, cargoGpo,
 			 resena, contacto, img1, img2, img3) VALUES ($idUsuario, '$nombreGpo', '$estado', '$ciudad',
 			  '$nombreDir', '$cargoGpo', '$resena', '$contacto', '$new_img1', '$new_img2', '$new_img3');
-			  UPDATE usuario SET actualizado = 1 WHERE idUsuario = $idUsuario;";
+			  UPDATE usuario SET actualizado = 1, estatus = '$estatus' WHERE idUsuario = $idUsuario;";
 			$query = mysqli_multi_query($conexion, $SQL);
 			
 			if ($query) {

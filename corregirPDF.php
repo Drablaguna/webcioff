@@ -2,6 +2,13 @@
 	session_start();
 
 	if ($_SESSION['sesion']) {
+		$_SESSION["tiempoIn"] = time();
+	    if ($_SESSION["tiempoIn"] >= $_SESSION["tiempoLim"]) {
+	        echo'<script type="text/javascript">
+	            alert("Tiempo de sesión expirado, vuelve a iniciar sesión.");
+	            window.location.href="p_logout.php";
+	            </script>';
+	    }
 		if ($_POST["key"] == "key") {
 			// solo actualizo la faseRegistro a 1
 			$idUsuario = $_SESSION["idUsuario"];

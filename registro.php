@@ -1,6 +1,13 @@
 <?php
 	session_start();
 	if (!$_SESSION['sesion']) { header("Location:index.php"); }
+    $_SESSION["tiempoIn"] = time();
+    if ($_SESSION["tiempoIn"] >= $_SESSION["tiempoLim"]) {
+        echo'<script type="text/javascript">
+            alert("Tiempo de sesión expirado, vuelve a iniciar sesión.");
+            window.location.href="p_logout.php";
+            </script>';
+    }
 ?>
 
 <?php 
@@ -99,43 +106,136 @@
                             <div class="modal-datos">
                                 <div class="modal-datos-top">
                                     <h2>Registro al Congreso</h2>
+                                    <a class="btn-form btn-main darkblue-btn" style="left: 67%; z-index: 4; top: 4.5%;"
+                                    href="registroInvitado.php">Registrar un invitado</a>
                                 </div>
                                 <div class="modal-mid-container">
-                                    <form class="modal-datos-mid" name="formActInf" method="POST" action="p_registro1.php" enctype="multipart/form-data">
+                                    <form id="formReg" class="modal-datos-mid" name="formActInf" method="POST" action="p_registro1.php" enctype="multipart/form-data">
                                         <h4>Nota: Tus datos como tu nombre, tu número de socio, estado y ciudad ya están alamacenados,
                                         por lo tanto no te los pediremos en el llenado de este formulario.<br><br>
                                         Si estás registrado en la plataforma con dos agrupaciones o más, por favor, contesta 
                                         este formulario con solo una de ellas.</h4>
                                         <br>
                                         <p><span>*</span>Campos requeridos</p>
+                                        <p><span>*</span>Si ya realizaste tu pago en su totalidad o ya pagaste alguna parte
+                                         de tu registro, por favor, selecciona el mes en que realizaste el pago</p>
+                                        <select class="input-form comboBox monthCombo" name="mesPago" form="formReg" style="width: 56%;" required>
+                                            <option selected disabled value="">Mes</option>
+                                            <option value="0">No he pagado aún</option><option value="6">Junio</option>
+                                            <option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option>
+                                            <option value="10">Octubre</option>
+                                        </select>
                                         <p><span>*</span>Correo</p>
                                         <input type="email" name="correo" class="input-form" placeholder="miCorreo@mail.com" minlength="5" maxlength="99" required>
                                         <p><span>*</span>Fecha de Nacimiento</p>
-                                        <input type="date" name="fechaNac" class="input-form" placeholder="dd/mm/aaaa" required>
+                                        <select class="input-form comboBox" name="diaFec" form="formReg" required>
+                                            <option selected disabled value="">Día</option>
+                                            <option value="01">1</option><option value="02">2</option><option value="03">3</option>
+                                            <option value="04">4</option><option value="05">5</option><option value="06">6</option>
+                                            <option value="07">7</option><option value="08">8</option><option value="09">9</option>
+                                            <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                                            <option value="13">13</option><option value="14">14</option><option value="15">15</option>
+                                            <option value="16">16</option><option value="17">17</option><option value="18">18</option>
+                                            <option value="19">19</option><option value="20">20</option><option value="21">21</option>
+                                            <option value="22">22</option><option value="23">23</option><option value="24">24</option>
+                                            <option value="25">25</option><option value="26">26</option><option value="27">27</option>
+                                            <option value="28">28</option><option value="29">29</option><option value="30">30</option>
+                                            <option value="31">31</option>
+                                        </select>
+                                        <select class="input-form comboBox monthCombo" name="mesFec" form="formReg" required>
+                                            <option selected disabled value="">Mes</option>
+                                            <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option>
+                                            <option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option>
+                                            <option value="07">Julio</option><option value="08">Agosto</option><option value="09">Septiembre</option>
+                                            <option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
+                                        </select>
+                                        <input type="number" name="anioFec" class="input-form comboBox" placeholder="2019" min="1900" max="2019" required>
                                         <p><span>*</span>Teléfono Celular</p>
                                         <input type="text" name="telefono" class="input-form" placeholder="4421234567" maxlength="10" required>
                                         <p>Teléfono Fijo</p>
                                         <input type="text" name="telefonoFijo" class="input-form" placeholder="123 4567" minlength="5" maxlength="49">
                                         <p><span>*</span>Tipo de Habitación</p>
-                                        <input type="radio" name="habitacion" class="radioBTN" value="Individual" required> Individual - $1000.00 MXN
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Individual" required> Sencilla
                                         <br><br>
-                                        <input type="radio" name="habitacion" class="radioBTN" value="Doble" required>  Doble - $2000.00 MXN
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Doble" required>  Doble
                                         <br><br>
-                                        <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple - $3000.00 MXN
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple
                                         <br><br>
-                                        <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple - $4000.00 MXN
-                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con una coma, en caso de no tener, 
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple
+                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con una coma (","), en caso de no tener, 
                                         llena este campo con un guión "-")</p>
                                         <textarea rows="4" cols="73" name="acompanantes" class="input-area input-area-short" minlength="1" maxlength="499" required></textarea>
-                                        <p><span>*</span>Fecha de llegada</p>
-                                        <input type="date" name="llegadaF" class="input-form" required>
-                                        <p><span>*</span>Hora de llegada</p>
-                                        <input type="time" name="llegadaH" class="input-form" required>
-                                        <p><span>*</span>Fecha de salida</p>
-                                        <input type="date" name="salidaF" class="input-form" required>
-                                        <p><span>*</span>Hora de salida</p>
-                                        <input type="time" name="salidaH" class="input-form" required>
-                                        
+                                        <p><span>*</span>Fecha y hora de llegada</p>
+                                        <select class="input-form comboBox" name="diaFecLleg" form="formReg" required>
+                                            <option selected disabled value="">Día</option>
+                                            <option value="01">1</option><option value="02">2</option><option value="03">3</option>
+                                            <option value="04">4</option><option value="05">5</option><option value="06">6</option>
+                                            <option value="07">7</option><option value="08">8</option><option value="09">9</option>
+                                            <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                                            <option value="13">13</option><option value="14">14</option><option value="15">15</option>
+                                            <option value="16">16</option><option value="17">17</option><option value="18">18</option>
+                                            <option value="19">19</option><option value="20">20</option><option value="21">21</option>
+                                            <option value="22">22</option><option value="23">23</option><option value="24">24</option>
+                                            <option value="25">25</option><option value="26">26</option><option value="27">27</option>
+                                            <option value="28">28</option><option value="29">29</option><option value="30">30</option>
+                                            <option value="31">31</option>
+                                        </select>
+                                        <select class="input-form comboBox monthCombo" name="mesFecLleg" form="formReg" required>
+                                            <option selected disabled value="">Mes</option>
+                                            <option value="10">Octubre</option><option value="11">Noviembre</option>
+                                        </select>
+                                        <select class="input-form comboBox" name="llegadaH" form="formReg" required>
+                                            <option selected disabled value="">Hora</option>
+                                            <option value="00">00</option><option value="01">01</option><option value="02">02</option>
+                                            <option value="03">03</option><option value="04">04</option><option value="05">05</option>
+                                            <option value="06">06</option><option value="07">07</option><option value="08">08</option>
+                                            <option value="09">09</option><option value="10">10</option><option value="11">11</option>
+                                            <option value="12">12</option><option value="13">13</option><option value="14">14</option>
+                                            <option value="15">15</option><option value="16">16</option><option value="17">17</option>
+                                            <option value="18">18</option><option value="19">19</option><option value="20">20</option>
+                                            <option value="21">21</option><option value="22">22</option><option value="23">23</option>
+                                        </select>
+                                        <select class="input-form comboBox" name="llegadaM" form="formReg" required>
+                                            <option selected disabled value="">Minutos</option>
+                                            <option value="00">00</option>
+                                            <option value="15">15</option><option value="30">30</option><option value="45">45</option>
+                                        </select>
+                                        <p><span>*</span>Fecha y hora de salida</p>
+                                        <select class="input-form comboBox" name="diaFecSal" form="formReg" required>
+                                            <option selected disabled value="">Día</option>
+                                            <option value="01">1</option><option value="02">2</option><option value="03">3</option>
+                                            <option value="04">4</option><option value="05">5</option><option value="06">6</option>
+                                            <option value="07">7</option><option value="08">8</option><option value="09">9</option>
+                                            <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                                            <option value="13">13</option><option value="14">14</option><option value="15">15</option>
+                                            <option value="16">16</option><option value="17">17</option><option value="18">18</option>
+                                            <option value="19">19</option><option value="20">20</option><option value="21">21</option>
+                                            <option value="22">22</option><option value="23">23</option><option value="24">24</option>
+                                            <option value="25">25</option><option value="26">26</option><option value="27">27</option>
+                                            <option value="28">28</option><option value="29">29</option><option value="30">30</option>
+                                            <option value="31">31</option>
+                                        </select>
+                                        <select class="input-form comboBox monthCombo" name="mesFecSal" form="formReg" required>
+                                            <option selected disabled value="">Mes</option>
+                                            <option value="11">Noviembre</option><option value="12">Diciembre</option>
+                                        </select>
+                                        <select class="input-form comboBox" name="salidaH" form="formReg" required>
+                                            <option selected disabled value="">Hora</option>
+                                            <option value="00">00</option><option value="01">01</option><option value="02">02</option>
+                                            <option value="03">03</option><option value="04">04</option><option value="05">05</option>
+                                            <option value="06">06</option><option value="07">07</option><option value="08">08</option>
+                                            <option value="09">09</option><option value="10">10</option><option value="11">11</option>
+                                            <option value="12">12</option><option value="13">13</option><option value="14">14</option>
+                                            <option value="15">15</option><option value="16">16</option><option value="17">17</option>
+                                            <option value="18">18</option><option value="19">19</option><option value="20">20</option>
+                                            <option value="21">21</option><option value="22">22</option><option value="23">23</option>
+                                        </select>
+                                        <select class="input-form comboBox" name="salidaM" form="formReg" required>
+                                            <option selected disabled value="">Minutos</option>
+                                            <option value="00">00</option>
+                                            <option value="15">15</option><option value="30">30</option><option value="45">45</option>
+                                        </select>
+
                                         <div class="modal-datos-mid-bottom">
                                             <input class="btn-main" type="submit" name="submit" value="Registrarse">
                                         </div>
@@ -171,20 +271,14 @@
                     $newFecha = date("d-m-Y", strtotime($fechaNacimiento));
                     $newFechaHoraLlegada = date("d-m-Y H:i", strtotime($fechaHoraLlegada));
                     $newFechaHoraSalida = date("d-m-Y H:i", strtotime($fechaHoraSalida));
-
-                    if ($newFechaHoraLlegada == "0000-00-00 00:00:00") {
-                        $newFechaHoraLlegada = "Aún no has agregado una fecha y hora de llegada.";
-                    }
-
-                    if ($newFechaHoraSalida == "0000-00-00 00:00:00") {
-                        $newFechaHoraSalida = "Aún no has agregado una fecha y hora de llegada.";
-                    }
-
+                    
                     echo '
                         <div class="modal-container">
                             <div class="modal-datos">
                                 <div class="modal-datos-top">
                                     <h2>Registro al Congreso</h2>
+                                    <a class="btn-form btn-main darkblue-btn" style="left: 68%; z-index: 4; top: 4.6%;" 
+                                    href="registroInvitado.php">Registrar un invitado</a>
                                 </div>
                                 <div class="modal-mid-container">
                                     <form class="modal-datos-mid" name="formActInf" method="POST" action="subirPDF.php" enctype="multipart/form-data">
@@ -219,14 +313,33 @@
                                         <h4>'.$newFechaHoraLlegada.'</h4>
                                         <p>Fecha y hora de salida</p>
                                         <h4>'.$newFechaHoraSalida.'</h4>
-                                        <p>Monto a pagar</p>
-                                        <h4>'.$monto.'</h4>
-                                        
-                                        <p>Si tus datos son correctos da clic al botón de abajo para generar tu recibo de registro al congreso.</p>
-
-                                        <p><span>*</span>Sube aquí tu recibo ya pagado en PDF</p>
-                                        <input type="file" accept="application/pdf" name="pdf" id="pdf" class="input-form input-file" required>
-
+                                        <p>Antes de continuar revisa que la información que ingresaste es correcta.</p><br>
+                                        <p id="bigText">IMPORTANTE</p><br>
+                                        ';
+                                        if ($monto >= 1) {
+                                            echo '
+                                            <p id="bigText">Para realizar el pago es necesario que deposites la cantidad exacta 
+                                            a la siguiente cuenta</p>
+                                            <p id="bigText">LORENA DEL CARMEN DUARTE CARRILLO<br>
+                                            BANORTE<br>
+                                            Cuenta
+                                            1027869988<br>
+                                            Clave Interbancaria
+                                            072 930 010278699881</p>
+                                            <p id="bigText">Tu monto a pagar es de:<br><br>$'.$monto.'</p><br>
+                                            ';
+                                        }
+                                        echo '
+                                        <p id="bigText">Para validar tu pago es necesario que el/los escaneo(s) o 
+                                        foto(s) de tu(s) recibo(s)/voucher(s) tenga(n) escrito(s) tu nombre para
+                                        verificar tu identidad.<br><br>
+                                        Si son varios los puedes subir en un documento de Word, o en una carpeta 
+                                        comprimida en .zip o .rar</p><br>
+                                        <p><span>*</span>Sube aquí tu recibo(s)/voucher(s) de pago en un 
+                                        documento de Word, una imagen/foto o una carpeta comprimida
+                                        en .zip o .rar</p>
+                                        <input type="file" name="pdf" id="pdf" class="input-form input-file" required>
+                                        <input style="display: none;" type="text" name="key" value="notkey">
                                         <div class="modal-datos-mid-bottom inline-buttons">
                                             <input class="btn-main" type="submit" name="submit" value="Subir recibo">
                                         </div>
@@ -242,8 +355,9 @@
                     Disconnect($con);
                 } elseif ($actualizado == 1 && $faseRegistro == 3) {
                     // es faseRegistro 3 si el usuario quiere corregir sus datos
-                    $SQL             = "SELECT correo, fechaNacimiento, telefonoCelular, telefonoFijo, acompanantes 
-                        FROM registrocongreso WHERE numSocio = $numSocio;";
+                    $SQL = "SELECT correo, fechaNacimiento, telefonoCelular, telefonoFijo,
+                     acompanantes, fechaHoraLlegada, fechaHoraSalida FROM registrocongreso 
+                     WHERE numSocio = $numSocio;";
                     $resSQLUP        = RunQuery($con, $SQL);
                     $arr_ass_UP      = mysqli_fetch_assoc($resSQLUP);
                     $correo          = $arr_ass_UP["correo"];
@@ -251,52 +365,139 @@
                     $telefonoCelular = $arr_ass_UP["telefonoCelular"];
                     $telefonoFijo    = $arr_ass_UP["telefonoFijo"];
                     $acompanantes    = $arr_ass_UP["acompanantes"];
-
                     // se imprimen los datos antes ingresados para hacer update
                     echo '
                         <div class="modal-container">
                             <div class="modal-datos">
                                 <div class="modal-datos-top">
-                                    <h2>Registro al Congreso</h2>
+                                    <h2>Actualizar Registro al Congreso</h2>
                                 </div>
                                 <div class="modal-mid-container">
-                                    <form class="modal-datos-mid" name="formActInf" method="POST" action="p_registro_update.php" enctype="multipart/form-data">
+                                    <form id="formReg" class="modal-datos-mid" name="formActInf" method="POST" action="p_registro_update.php" enctype="multipart/form-data">
                                         <h4>Nota: Tus datos como tu nombre, tu número de socio, estado y ciudad ya están alamacenados,
                                         por lo tanto no te los pediremos en el llenado de este formulario.<br><br>
                                         Si estás registrado en la plataforma con dos agrupaciones o más, por favor, contesta 
                                         este formulario con solo una de ellas.</h4>
                                         <br>
                                         <p><span>*</span>Campos requeridos</p>
+                                        <p><span>*</span>Si ya realizaste tu pago en su totalidad o ya pagaste alguna parte
+                                         de tu registro, por favor, selecciona el mes en que realizaste el pago</p>
+                                        <select class="input-form comboBox monthCombo" name="mesPago" form="formReg" style="width: 56%;" required>
+                                            <option selected disabled value="">Mes</option>
+                                            <option value="0">No he pagado aún</option><option value="6">Junio</option>
+                                            <option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option>
+                                            <option value="10">Octubre</option>
+                                        </select>
                                         <p><span>*</span>Correo</p>
                                         <input type="email" name="correo" class="input-form" minlength="5" maxlength="99" value="'.$correo.'" required>
                                         <p><span>*</span>Fecha de Nacimiento</p>
-                                        <input type="date" name="fechaNac" class="input-form" value="'.$fechaNacimiento.'" required>
+                                        <select class="input-form comboBox" name="diaFec" form="formReg" required>
+                                            <option selected disabled value="">Día</option>
+                                            <option value="01">1</option><option value="02">2</option><option value="03">3</option>
+                                            <option value="04">4</option><option value="05">5</option><option value="06">6</option>
+                                            <option value="07">7</option><option value="08">8</option><option value="09">9</option>
+                                            <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                                            <option value="13">13</option><option value="14">14</option><option value="15">15</option>
+                                            <option value="16">16</option><option value="17">17</option><option value="18">18</option>
+                                            <option value="19">19</option><option value="20">20</option><option value="21">21</option>
+                                            <option value="22">22</option><option value="23">23</option><option value="24">24</option>
+                                            <option value="25">25</option><option value="26">26</option><option value="27">27</option>
+                                            <option value="28">28</option><option value="29">29</option><option value="30">30</option>
+                                            <option value="31">31</option>
+                                        </select>
+                                        <select class="input-form comboBox monthCombo" name="mesFec" form="formReg" required>
+                                            <option selected disabled value="">Mes</option>
+                                            <option value="01">Enero</option><option value="02">Febrero</option><option value="03">Marzo</option>
+                                            <option value="04">Abril</option><option value="05">Mayo</option><option value="06">Junio</option>
+                                            <option value="07">Julio</option><option value="08">Agosto</option><option value="09">Septiembre</option>
+                                            <option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
+                                        </select>
+                                        <input type="number" name="anioFec" class="input-form comboBox" placeholder="2019" min="1900" max="2019" required>
                                         <p><span>*</span>Teléfono Celular</p>
                                         <input type="text" name="telefono" class="input-form" maxlength="10" value="'.$telefonoCelular.'" required>
                                         <p>Teléfono Fijo</p>
                                         <input type="text" name="telefonoFijo" class="input-form" minlength="5" maxlength="49" value="'.$telefonoFijo.'">
                                         <p><span>*</span>Tipo de Habitación</p>
-                                        <input type="radio" name="habitacion" class="radioBTN" value="Individual" required> Individual - $1000.00 MXN
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Individual" required> Sencilla
                                         <br><br>
-                                        <input type="radio" name="habitacion" class="radioBTN" value="Doble" required>  Doble - $2000.00 MXN
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Doble" required>  Doble
                                         <br><br>
-                                        <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple - $3000.00 MXN
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple
                                         <br><br>
-                                        <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple - $4000.00 MXN
-                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con una coma, en caso de no tener, 
+                                        <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple
+                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con una coma (","), en caso de no tener, 
                                         llena este campo con un guión "-")</p>
                                         <textarea rows="4" cols="73" name="acompanantes" class="input-area input-area-short" minlength="1" maxlength="499" required>'.$acompanantes.'</textarea>
-                                        <br><br>
-                                        <h4>Nota: Asegúrate de ingresar correctamente la fecha, la hora la puedes ingresar en formato de 24 hrs o 12 hrs (en ambos formatos es necesario
-                                        que especifiques si es a.m. o p.m.) </h4>
-                                        <p><span>*</span>Fecha de llegada</p>
-                                        <input type="date" name="llegadaF" class="input-form" required>
-                                        <p><span>*</span>Hora de llegada</p>
-                                        <input type="time" name="llegadaH" class="input-form" required>
-                                        <p><span>*</span>Fecha de salida</p>
-                                        <input type="date" name="salidaF" class="input-form" required>
-                                        <p><span>*</span>Hora de salida</p>
-                                        <input type="time" name="salidaH" class="input-form" required>
+                                        <p><span>*</span>Fecha y hora de llegada</p>
+                                        <select class="input-form comboBox" name="diaFecLleg" form="formReg" required>
+                                            <option selected disabled value="">Día</option>
+                                            <option value="01">1</option><option value="02">2</option><option value="03">3</option>
+                                            <option value="04">4</option><option value="05">5</option><option value="06">6</option>
+                                            <option value="07">7</option><option value="08">8</option><option value="09">9</option>
+                                            <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                                            <option value="13">13</option><option value="14">14</option><option value="15">15</option>
+                                            <option value="16">16</option><option value="17">17</option><option value="18">18</option>
+                                            <option value="19">19</option><option value="20">20</option><option value="21">21</option>
+                                            <option value="22">22</option><option value="23">23</option><option value="24">24</option>
+                                            <option value="25">25</option><option value="26">26</option><option value="27">27</option>
+                                            <option value="28">28</option><option value="29">29</option><option value="30">30</option>
+                                            <option value="31">31</option>
+                                        </select>
+                                        <select class="input-form comboBox monthCombo" name="mesFecLleg" form="formReg" required>
+                                            <option selected disabled value="">Mes</option>
+                                            <option value="10">Octubre</option><option value="11">Noviembre</option>
+                                        </select>
+                                        <select class="input-form comboBox" name="llegadaH" form="formReg" required>
+                                            <option selected disabled value="">Hora</option>
+                                            <option value="00">00</option><option value="01">01</option><option value="02">02</option>
+                                            <option value="03">03</option><option value="04">04</option><option value="05">05</option>
+                                            <option value="06">06</option><option value="07">07</option><option value="08">08</option>
+                                            <option value="09">09</option><option value="10">10</option><option value="11">11</option>
+                                            <option value="12">12</option><option value="13">13</option><option value="14">14</option>
+                                            <option value="15">15</option><option value="16">16</option><option value="17">17</option>
+                                            <option value="18">18</option><option value="19">19</option><option value="20">20</option>
+                                            <option value="21">21</option><option value="22">22</option><option value="23">23</option>
+                                        </select>
+                                        <select class="input-form comboBox" name="llegadaM" form="formReg" required>
+                                            <option selected disabled value="">Minutos</option>
+                                            <option value="00">00</option>
+                                            <option value="15">15</option><option value="30">30</option><option value="45">45</option>
+                                        </select>
+                                        <p><span>*</span>Fecha y hora de salida</p>
+                                        <select class="input-form comboBox" name="diaFecSal" form="formReg" required>
+                                            <option selected disabled value="">Día</option>
+                                            <option value="01">1</option><option value="02">2</option><option value="03">3</option>
+                                            <option value="04">4</option><option value="05">5</option><option value="06">6</option>
+                                            <option value="07">7</option><option value="08">8</option><option value="09">9</option>
+                                            <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                                            <option value="13">13</option><option value="14">14</option><option value="15">15</option>
+                                            <option value="16">16</option><option value="17">17</option><option value="18">18</option>
+                                            <option value="19">19</option><option value="20">20</option><option value="21">21</option>
+                                            <option value="22">22</option><option value="23">23</option><option value="24">24</option>
+                                            <option value="25">25</option><option value="26">26</option><option value="27">27</option>
+                                            <option value="28">28</option><option value="29">29</option><option value="30">30</option>
+                                            <option value="31">31</option>
+                                        </select>
+                                        <select class="input-form comboBox monthCombo" name="mesFecSal" form="formReg" required>
+                                            <option selected disabled value="">Mes</option>
+                                            <option value="11">Noviembre</option><option value="12">Diciembre</option>
+                                        </select>
+                                        <select class="input-form comboBox" name="salidaH" form="formReg" required>
+                                            <option selected disabled value="">Hora</option>
+                                            <option value="00">00</option><option value="01">01</option><option value="02">02</option>
+                                            <option value="03">03</option><option value="04">04</option><option value="05">05</option>
+                                            <option value="06">06</option><option value="07">07</option><option value="08">08</option>
+                                            <option value="09">09</option><option value="10">10</option><option value="11">11</option>
+                                            <option value="12">12</option><option value="13">13</option><option value="14">14</option>
+                                            <option value="15">15</option><option value="16">16</option><option value="17">17</option>
+                                            <option value="18">18</option><option value="19">19</option><option value="20">20</option>
+                                            <option value="21">21</option><option value="22">22</option><option value="23">23</option>
+                                        </select>
+                                        <select class="input-form comboBox" name="salidaM" form="formReg" required>
+                                            <option selected disabled value="">Minutos</option>
+                                            <option value="00">00</option>
+                                            <option value="15">15</option><option value="30">30</option><option value="45">45</option>
+                                        </select>
                                         
                                         <div class="modal-datos-mid-bottom">
                                             <input class="btn-main" type="submit" name="submit" style="margin-left: -10px;" value="Actualizar registro">
@@ -309,12 +510,13 @@
                     Disconnect($con);
                 } elseif ($actualizado == 1 && $faseRegistro == 4 && $pagado == 0) {
                     // el usuario ya subio su recibo, el recibo se está comprobando
-
                     echo '
                         <div class="modal-container">
                             <div class="modal-datos modal-small">
                                 <div class="modal-datos-top">
                                     <h2>Registro al Congreso</h2>
+                                    <a class="btn-form btn-main darkblue-btn" style="left: 69%; z-index: 4; top: 6.9%;" 
+                                    href="registroInvitado.php">Registrar un invitado</a>
                                 </div>
                                 <div class="modal-mid-container">
                                     <br><br>
@@ -332,7 +534,9 @@
                     Disconnect($con);
                 } elseif ($actualizado == 1 && $faseRegistro == 4 && $pagado == 1) {
                     // el usuario ya subio su recibo y puede generar su entrada en pdf
-
+                    
+                    echo '<a class="btn-form btn-main darkblue-btn" style="left: 330px;"
+                    href="registroInvitado.php">Registrar un invitado</a>';
                     echo '
                         <div class="modal-container">
                             <div class="modal-datos modal-small">
