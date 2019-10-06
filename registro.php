@@ -575,6 +575,7 @@
                             </div>
                         </div>
                     ';
+                    Disconnect($con);
                 }
             ?>
 

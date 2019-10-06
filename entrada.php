@@ -1,13 +1,6 @@
 <?php 
 	session_start();
 	if ($_SESSION["sesion"]) {
-		$_SESSION["tiempoIn"] = time();
-	    if ($_SESSION["tiempoIn"] >= $_SESSION["tiempoLim"]) {
-	        echo'<script type="text/javascript">
-	            alert("Tiempo de sesión expirado, vuelve a iniciar sesión.");
-	            window.location.href="p_logout.php";
-	            </script>';
-	    }
 		$numSocio  = $_SESSION["numSocio"];
 
 		require("fpdf.php");
