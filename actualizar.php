@@ -160,6 +160,7 @@
                                     <br><br><p>Sube aquí tres fotos de tu agrupación, no deben exceder 5 MB en peso y tienen que ser de tipo .jpeg,
                                      .JPEG, .jpg, .JPG, .png o .PNG</p>
                                     <p>Para mejores resultados asegúrate de subir fotos en tamaño rectangular (ancho mayor y alto menor).</p>
+                                    <p style="color: rgb(0,120,190); font-size: 20px;">Sé paciente, la subida puede ser lenta dependiendo de tu conexión a internet.</p>
                                     <p>Foto 1</p>
                                     <input type="file" accept="image/*" name="img1" id="img1" class="input-form input-file">
                                     <p>Foto 2</p>
@@ -178,6 +179,8 @@
                                     <br><br><p>Sube aquí tres fotos de tu agrupación, no deben exceder 5 MB en peso y tienen que ser de tipo .jpeg,
                                      .JPEG, .jpg, .JPG, .png o .PNG</p>
                                     <p>Para mejores resultados asegúrate de subir fotos en tamaño rectangular (ancho mayor y alto menor).</p>
+                                    <p>Como es tu primera vez actualizando tus datos, es necesario que subas tres fotos</p>
+                                    <p style="color: rgb(0,120,190); font-size: 20px;">Sé paciente, la subida puede ser lenta dependiendo de tu conexión a internet.</p>
                                     <p><span>*</span>Foto 1</p>
                                     <input type="file" accept="image/*" name="img1" id="img1" class="input-form input-file" required>
                                     <p><span>*</span>Foto 2</p>
