@@ -12,8 +12,18 @@
 	            </script>';
 	    }
 	    include("Connection.php");
+
 		$idUsuario    = $_SESSION["idUsuario"];
 		$numSocio     = $_SESSION["numSocio"];
+
+	    $conexion = Connect();
+
+		mysqli_query($conexion, "SET NAMES 'utf8'");
+
+		$SQLest = "SELECT estatus FROM usuario WHERE idUsuario = $idUsuario;";
+		$qE = RunQuery($conexion, $SQLest);
+		$estAr = mysqli_fetch_assoc($qE);
+		$estatus = $estAr["estatus"];
 
 		$correo 	  = $_POST["correo"];
 		$diaFec 	  = $_POST["diaFec"];
@@ -27,10 +37,40 @@
 		$habitacion   = $_POST["habitacion"];
 		$monto = 0.00;
 		$now = date("Y-m-d H:i:s");
-		$thisMonth = date("m");
 
-		if ($mesPago == 0) {
-			$monto = calcularMonto($thisMonth, $habitacion);
+		switch ($mesPago) {
+			case 0:
+				$thisMonth = date("m");
+				$monto = calcularMonto($thisMonth, $habitacion, $estatus);
+				break;
+
+			case 6:
+				$monto = calcularMonto(6, $habitacion, $estatus);		
+				break;
+
+			case 7:
+				$monto = calcularMonto(7, $habitacion, $estatus);		
+				break;
+
+			case 8:
+				$monto = calcularMonto(8, $habitacion, $estatus);		
+				break;
+
+			case 9:
+				$monto = calcularMonto(9, $habitacion, $estatus);		
+				break;
+
+			case 10:
+				$monto = calcularMonto(10, $habitacion, $estatus);		
+				break;
+
+			case 11:
+				$monto = calcularMonto(11, $habitacion, $estatus);		
+				break;
+			
+			default:
+				$monto = 1;
+				break;
 		}
 
 		$acompanantes = $_POST["acompanantes"];
@@ -43,10 +83,6 @@
 		$mesFecSal = $_POST["mesFecSal"];
 		$salidaH = $_POST["salidaH"];
 		$salidaM = $_POST["salidaM"];
-
-		$conexion = Connect();
-
-		mysqli_query($conexion, "SET NAMES 'utf8'");
 
 		$SQLFase   = "SELECT faseRegistro FROM usuario WHERE idUsuario = $idUsuario;";
 		$queryFase = RunQuery($conexion, $SQLFase);

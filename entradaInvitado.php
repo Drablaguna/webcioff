@@ -16,7 +16,7 @@
     $string5 = $estado;
     $string6 = "Invitado";
     $string7 = "Habitación: ".$habitacion;
-    $string8 = "Acompañantes: ";
+    $string8 = "Personas con las que compartirá habitación: ";
 
     $pdf = new FPDF();
 	$pdf->AddPage("P", "A4");

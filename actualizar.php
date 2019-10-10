@@ -19,11 +19,10 @@
     
     // checo si el usuario ya esta actualizado para poder asignar valores vacios a las variables para los
     // placeholders y no me arroje error
-    $SQLactualizado = "SELECT actualizado, estatus FROM usuario WHERE idUsuario = $idUser";
+    $SQLactualizado = "SELECT actualizado FROM usuario WHERE idUsuario = $idUser";
     $r = RunQuery($con, $SQLactualizado);
     $arr_r = mysqli_fetch_assoc($r);
     $actualizado = $arr_r["actualizado"];
-    $estatus = $arr_r["estatus"];
 
     // inicializo las variables en "" para que no haya error
     $nombreGpo = "";
@@ -137,7 +136,10 @@
                                     <br>
                                     <p><span>*</span>Campos requeridos</p>
                                     <p><span>*</span>Estatus CIOFF</p>
-                                    <input type="text" name="estatus" class="input-form" minlength="1" maxlength="99" value="'.$estatus.'" required>
+                                    <select class="input-form comboBox monthCombo" name="estatus" form="formUpdate" style="width: 56%;" required>
+                                        <option selected disabled value="">Estatus CIOFF</option>
+                                        <option value="Miembro CIOFF">Miembro CIOFF</option><option value="Miembro CIOFF Joven">Miembro CIOFF Joven</option>
+                                    </select>
                                     <p><span>*</span>Nombre de Grupo (o festival en caso de que la cuenta pertenezca a uno)</p>
                                     <input type="text" name="nombreGpo" class="input-form" minlength="10" maxlength="199" value="'.$nombreGpo.'" required>
                                     <p><span>*</span>Estado</p>
@@ -155,6 +157,8 @@
                                     ';
                             if ($actualizado == 1) {
                                 echo '
+                                    <br><br><p>Sube aquí tres fotos de tu agrupación, no deben exceder 5 MB en peso y tienen que ser de tipo .jpeg,
+                                     .JPEG, .jpg, .JPG, .png o .PNG</p>
                                     <p>Para mejores resultados asegúrate de subir fotos en tamaño rectangular (ancho mayor y alto menor).</p>
                                     <p>Foto 1</p>
                                     <input type="file" accept="image/*" name="img1" id="img1" class="input-form input-file">
@@ -171,8 +175,9 @@
                                 ';
                             } else {
                                 echo '
-                                    <p>Para mejores resultados asegúrate de subir fotos en tamaño rectangular (ancho mayor y alto menor)
-                                    Como es el primer ingreso de tu información es requerido que subas fotos.</p>
+                                    <br><br><p>Sube aquí tres fotos de tu agrupación, no deben exceder 5 MB en peso y tienen que ser de tipo .jpeg,
+                                     .JPEG, .jpg, .JPG, .png o .PNG</p>
+                                    <p>Para mejores resultados asegúrate de subir fotos en tamaño rectangular (ancho mayor y alto menor).</p>
                                     <p><span>*</span>Foto 1</p>
                                     <input type="file" accept="image/*" name="img1" id="img1" class="input-form input-file" required>
                                     <p><span>*</span>Foto 2</p>

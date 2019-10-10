@@ -123,7 +123,7 @@
                                             <option selected disabled value="">Mes</option>
                                             <option value="0">No he pagado aún</option><option value="6">Junio</option>
                                             <option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option>
-                                            <option value="10">Octubre</option>
+                                            <option value="10">Octubre</option><option value="11">Noviembre</option>
                                         </select>
                                         <p><span>*</span>Correo</p>
                                         <input type="email" name="correo" class="input-form" placeholder="miCorreo@mail.com" minlength="5" maxlength="99" required>
@@ -162,7 +162,7 @@
                                         <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple
                                         <br><br>
                                         <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple
-                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con una coma (","), en caso de no tener, 
+                                        <p><span>*</span>Personas con las que compartirá habitación<br> (separar cada uno de ellos con una coma (","), en caso de no tener, 
                                         llena este campo con un guión "-")</p>
                                         <textarea rows="4" cols="73" name="acompanantes" class="input-area input-area-short" minlength="1" maxlength="499" required></textarea>
                                         <p><span>*</span>Fecha y hora de llegada</p>
@@ -307,7 +307,7 @@
                                         <h4>'.$telefonoFijo.'</h4>
                                         <p>Tipo de Habitación</p>
                                         <h4>'.$habitacion.'</h4>
-                                        <p>Acompañantes</p>
+                                        <p>Personas con las que compartirá habitación</p>
                                         <h4>'.$acompanantes.'</h4>
                                         <p>Fecha y hora de llegada</p>
                                         <h4>'.$newFechaHoraLlegada.'</h4>
@@ -326,10 +326,13 @@
                                             1027869988<br>
                                             Clave Interbancaria
                                             072 930 010278699881</p>
-                                            <p id="bigText">Tu monto a pagar es de:<br><br>$'.$monto.'</p><br>
+                                            <p id="bigText">Tu monto total a pagar es de:<br><br>$'.$monto.'</p><br>
                                             ';
                                         }
                                         echo '
+                                        <p id="bigText" style="color: rgb(0,120,190); font-weight: bold;">NOTA: Si ya has realizado anteriormente 
+                                        algún pago es necesario que verifiques la cantidad que hasta el momento has cubierto,
+                                         y partiendo de ese número determines la cantidad que tienes que pagar para liquidar el pago completo.</p>
                                         <p id="bigText">Para validar tu pago es necesario que el/los escaneo(s) o 
                                         foto(s) de tu(s) recibo(s)/voucher(s) tenga(n) escrito(s) tu nombre para
                                         verificar tu identidad.<br><br>
@@ -386,7 +389,7 @@
                                             <option selected disabled value="">Mes</option>
                                             <option value="0">No he pagado aún</option><option value="6">Junio</option>
                                             <option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option>
-                                            <option value="10">Octubre</option>
+                                            <option value="10">Octubre</option><option value="11">Noviembre</option>
                                         </select>
                                         <p><span>*</span>Correo</p>
                                         <input type="email" name="correo" class="input-form" minlength="5" maxlength="99" value="'.$correo.'" required>
@@ -425,7 +428,7 @@
                                         <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple
                                         <br><br>
                                         <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple
-                                        <p><span>*</span>Acompañantes (separar cada uno de ellos con una coma (","), en caso de no tener, 
+                                        <p><span>*</span>Personas con las que compartirá habitación (separar cada uno de ellos con una coma (","), en caso de no tener, 
                                         llena este campo con un guión "-")</p>
                                         <textarea rows="4" cols="73" name="acompanantes" class="input-area input-area-short" minlength="1" maxlength="499" required>'.$acompanantes.'</textarea>
                                         <p><span>*</span>Fecha y hora de llegada</p>

@@ -24,6 +24,11 @@
 			$queryG = RunQuery($con, $SQLGpo);
 			$gpoArr = mysqli_fetch_assoc($queryG);
 
+			$SQLest = "SELECT estatus FROM usuario WHERE idUsuario = $idUsuario;";
+			$qE = RunQuery($con, $SQLest);
+			$estAr = mysqli_fetch_assoc($qE);
+			$estatus = $estAr["estatus"];
+
 			$nombreDir = $gpoArr["nombreDir"];
 			$estado    = $gpoArr["estado"];
 			$ciudad    = $gpoArr["ciudad"];
@@ -41,11 +46,41 @@
 
 			$mesPago = $_POST["mesPago"];
 			$habitacion = $_POST["habitacion"];
-			$monto = 0.00;			
-			$thisMonth = date("m");
+			$monto = 0.00;
 
-			if ($mesPago == 0) {
-				$monto = calcularMonto($thisMonth, $habitacion);
+			switch ($mesPago) {
+				case 0:
+					$thisMonth = date("m");
+					$monto = calcularMonto($thisMonth, $habitacion, $estatus);
+					break;
+				
+				case 6:
+					$monto = calcularMonto(6, $habitacion, $estatus);		
+					break;
+
+				case 7:
+					$monto = calcularMonto(7, $habitacion, $estatus);		
+					break;
+
+				case 8:
+					$monto = calcularMonto(8, $habitacion, $estatus);		
+					break;
+
+				case 9:
+					$monto = calcularMonto(9, $habitacion, $estatus);		
+					break;
+
+				case 10:
+					$monto = calcularMonto(10, $habitacion, $estatus);		
+					break;
+
+				case 11:
+					$monto = calcularMonto(11, $habitacion, $estatus);		
+					break;
+				
+				default:
+					$monto = 1;
+					break;
 			}
 
 			$diaFecLleg = $_POST["diaFecLleg"];

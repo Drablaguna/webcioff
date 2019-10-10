@@ -69,9 +69,19 @@
         return $ip;
     }
 
-    function calcularMonto($mesNum, $habitacionStr) {
+    function calcularMonto($mesNum, $habitacionStr, $estatus) {
         $monto = 0;
         $diaNow = date("d");
+        $sum = 0;
+
+        if ($estatus == "Miembro CIOFF") {
+            $sum = 2000;
+        } elseif ($estatus == "Miembro CIOFF Joven") {
+            $sum = 500;
+        } else {
+            $sum = 800;
+        }
+
         switch ($mesNum) {
             case 6:
                 if ($habitacionStr == "Individual") {
@@ -176,6 +186,7 @@
                 $monto = 1.00;
                 break;
         }
+        $monto = $monto + $sum;
         return $monto;
     }
 

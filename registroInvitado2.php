@@ -133,10 +133,40 @@
                 $mesPago = $_POST["mesPago"];
                 $habitacion = $_POST["habitacion"];
                 $monto = 0.00;          
-                $thisMonth = date("m");
 
-                if ($mesPago == 0) {
-                    $monto = calcularMonto($thisMonth, $habitacion);
+                switch ($mesPago) {
+                    case 0:
+                        $thisMonth = date("m");
+                        $monto = calcularMonto($thisMonth, $habitacion, "Invitado");
+                        break;
+
+                    case 6:
+                        $monto = calcularMonto(6, $habitacion, "Invitado");       
+                        break;
+
+                    case 7:
+                        $monto = calcularMonto(7, $habitacion, "Invitado");       
+                        break;
+
+                    case 8:
+                        $monto = calcularMonto(8, $habitacion, "Invitado");       
+                        break;
+
+                    case 9:
+                        $monto = calcularMonto(9, $habitacion, "Invitado");       
+                        break;
+
+                    case 10:
+                        $monto = calcularMonto(10, $habitacion, "Invitado");      
+                        break;
+
+                    case 11:
+                        $monto = calcularMonto(11, $habitacion, "Invitado");      
+                        break;
+                    
+                    default:
+                        $monto = 1;
+                        break;
                 }
 
                 $_SESSION["arrInvitado"]["monto"] = $monto;
@@ -190,6 +220,9 @@
                                         ';
                                     }
                                     echo '
+                                    <p id="bigText" style="color: rgb(0,120,190); font-weight: bold;">NOTA: Si ya has realizado anteriormente 
+                                    algún pago es necesario que verifiques la cantidad que hasta el momento has cubierto,
+                                     y partiendo de ese número determines la cantidad que tienes que pagar para liquidar el pago completo.</p>
                                     <p id="bigText">Para validar tu pago es necesario que el/los escaneo(s) o 
                                     foto(s) de tu(s) recibo(s)/voucher(s) tenga(n) escrito(s) tu nombre para
                                     verificar tu identidad.<br><br>

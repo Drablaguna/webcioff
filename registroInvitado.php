@@ -112,7 +112,7 @@
                                         <option selected disabled value="">Mes</option>
                                         <option value="0">No he pagado aún</option><option value="6">Junio</option>
                                         <option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option>
-                                        <option value="10">Octubre</option>
+                                        <option value="10">Octubre</option><option value="11">Noviembre</option>
                                     </select>
                                     <p><span>*</span>Nombre completo</p>
                                     <input type="text" name="nombre" class="input-form" minlength="5" maxlength="99" required>
@@ -157,7 +157,7 @@
                                     <input type="radio" name="habitacion" class="radioBTN" value="Triple" required>  Triple
                                     <br><br>
                                     <input type="radio" name="habitacion" class="radioBTN" value="Cuadruple" required>  Cuádruple
-                                    <p><span>*</span>Acompañantes (separar cada uno de ellos con una coma (","), en caso de no tener, 
+                                    <p><span>*</span>Personas con las que compartirá habitación (separar cada uno de ellos con una coma (","), en caso de no tener, 
                                     llena este campo con un guión "-")</p>
                                     <textarea rows="4" cols="73" name="acompanantes" class="input-area input-area-short" minlength="1" maxlength="499" required></textarea>
                                     <p><span>*</span>Fecha y hora de llegada</p>

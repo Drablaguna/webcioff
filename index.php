@@ -3,7 +3,7 @@
     // si la sesion no esta vacia, si no esta vacia y existe 'sesion' volver a miCuenta
     
     if (!empty($_SESSION)) {
-        if ($_SESSION['sesion']) {
+        if (isset($_SESSION['sesion'])) {
             header("Location:miCuenta.php");
         }        
     }
@@ -49,7 +49,7 @@
     </div>
 
     <div class="version-text">
-        <h4>Ver 1.23</h4>
+        <h4>Ver 1.24</h4>
     </div>
 
 </body>
